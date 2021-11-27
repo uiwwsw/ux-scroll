@@ -1,6 +1,6 @@
 {
   "name": "ux-scroll",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "dist/index.js",
   "repository": "https://uiwwsw@github.com/uiwwsw/ux-scroll.git",
   "author": "matthew <uiwwsw@icloud.com>",
