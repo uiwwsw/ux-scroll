@@ -1,0 +1,11 @@
+.ux {
+  &--fade-up {
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    transform: translate(0, -100px);
+  }
+  &__animated {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
