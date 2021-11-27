@@ -42,7 +42,7 @@ export default class ScrollEvent {
     return number === -1 ? this.elements.length : number;
   }
   private getElementDataset(x: HTMLElement, keyword: OptionKey) {
-    return x.dataset[this.dataset[keyword]];
+    return x.dataset[this.dataset[keyword]] || "";
   }
   private getElements(selector: string) {
     return Array.prototype.slice
