@@ -67,7 +67,7 @@ export default class Scroll {
     if (!str) return 0;
     if (str.includes("px")) return Number(str.replace("px", ""));
     if (str.includes("%"))
-      return Number(str.replace("%", "")) * Scroll.windowSize;
+      return Number(str.replace("%", "")) * Scroll.windowSize * 0.01;
     return Number(str) * Scroll.windowSize;
   }
   private getOptions({ options, commonOptions }) {

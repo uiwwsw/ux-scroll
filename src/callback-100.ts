@@ -13,8 +13,8 @@ export default class Callback100 extends Scroll {
     options?: IndexOption<InputOption>;
   }) {
     commonOptions = {
-      classStart: "counting-number-start",
-      classEnd: "counting-number-end",
+      classStart: "ux__callback-100--start",
+      classEnd: "ux__callback-100--end",
       ...commonOptions,
     };
     super({ selector, options, commonOptions });
