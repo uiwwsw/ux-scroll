@@ -21,21 +21,21 @@ export interface InputOption extends Option {
   marginStart?: string;
   marginEnd?: string;
 }
-export interface InputOptions {
-  [T: number]: InputOption;
+export interface IndexOption<T> {
+  [T: number]: T;
 }
 export interface Elements {
   x: HTMLElement;
   i: number;
 }
 export default class Scroll {
-  protected static windowSize: number;
   private elements: Elements[];
   public options: OutOption[];
 
+  protected static windowSize: number;
   protected static scrollPosition = -1;
   protected static direction = Direction.Y;
-  protected static size = Size.Y;
+  // protected static size = Size.Y;
 
   constructor({
     selector,
@@ -44,20 +44,17 @@ export default class Scroll {
   }: {
     selector: string;
     commonOptions?: InputOption;
-    options?: InputOptions;
+    options?: IndexOption<InputOption>;
   }) {
-    this.init({ selector, options, commonOptions });
-  }
-  public init({ selector, options, commonOptions }) {
+    Scroll.windowSize = Scroll.getWindowSize();
     this.elements = this.getElements(selector);
     this.options = this.getOptions({ options, commonOptions });
-    Scroll.windowSize = Scroll.getWindowSize();
     this.addGlobalEvent();
   }
-  static get startPosition() {
+  public static get startPosition() {
     return Scroll.scrollPosition + Scroll.windowSize;
   }
-  static get endPosition() {
+  public static get endPosition() {
     return Scroll.scrollPosition;
   }
   private get index() {
@@ -74,17 +71,19 @@ export default class Scroll {
     return Number(str) * Scroll.windowSize;
   }
   private getOptions({ options, commonOptions }) {
+    !options && (options = {});
+    !commonOptions && (commonOptions = {});
     return this.elements.map(({ x, i }) => {
       const position =
         Scroll.direction === Direction.Y ? x.offsetTop : x.offsetLeft;
       return {
         position: position,
         marginStart:
-          this.getUnit(options[i]?.marginStart) ||
-          this.getUnit(commonOptions?.marginStart),
+          this.getUnit(commonOptions?.marginStart) ||
+          this.getUnit(options[i]?.marginStart),
         marginEnd:
-          this.getUnit(options[i]?.marginEnd) ||
-          this.getUnit(commonOptions?.marginEnd),
+          this.getUnit(commonOptions?.marginEnd) ||
+          this.getUnit(options[i]?.marginEnd),
         classStart: options[i]?.classStart || commonOptions?.classStart,
         classEnd: options[i]?.classEnd || commonOptions?.classEnd,
         dataDuration: options[i]?.dataDuration || commonOptions?.dataDuration,
@@ -104,65 +103,85 @@ export default class Scroll {
   }
 
   private getScrollDownElements() {
-    return this.elements.filter(
-      ({ x, i }) =>
-        this.options[i].classStart &&
-        this.options[i].position + this.options[i].marginStart <
-          Scroll.startPosition &&
-        !x.classList.contains(this.options[i].classStart)
-    );
-  }
-  private getScrollDurationElements() {
     return this.elements
       .map(({ x, i }) => ({
         x: x,
-        step: this.options[i].dataDuration,
         y: this.options[i].position + this.options[i].marginStart,
+        i,
       }))
       .filter(
-        ({ x, step, y }) =>
-          step && y < Scroll.startPosition && x.dataset[step] !== "100"
+        ({ x, y, i }) =>
+          this.options[i].classStart &&
+          y < Scroll.startPosition &&
+          !x.classList.contains(this.options[i].classStart)
       );
   }
+  // private getScrollDurationElements() {
+  //   return this.elements
+  //     .map(({ x, i }) => ({
+  //       x: x,
+  //       step: this.options[i].dataDuration,
+  //       y: this.options[i].position + this.options[i].marginStart,
+  //     }))
+  //     .filter(
+  //       ({ x, step, y }) =>
+  //         step && y < Scroll.startPosition && x.dataset[step] !== "100"
+  //     );
+  // }
   private getDownElements() {
-    return this.elements.filter(
-      ({ x, i }) =>
-        this.options[i].classEnd &&
-        this.options[i].position + this.options[i].marginEnd <
-          Scroll.endPosition &&
-        !x.classList.contains(this.options[i].classEnd)
-    );
+    return this.elements
+      .map(({ x, i }) => ({
+        x: x,
+        y: this.options[i].position + this.options[i].marginEnd,
+        i,
+      }))
+      .filter(
+        ({ x, y, i }) =>
+          this.options[i].classEnd &&
+          y < Scroll.endPosition &&
+          !x.classList.contains(this.options[i].classEnd)
+      );
   }
 
   private getScrollUpElements() {
-    return this.elements.filter(
-      ({ x, i }) =>
-        this.options[i].classStart &&
-        this.options[i].position + this.options[i].marginStart >
-          Scroll.startPosition &&
-        x.classList.contains(this.options[i].classStart)
-    );
-  }
-  private getDurationElements() {
     return this.elements
       .map(({ x, i }) => ({
         x: x,
-        step: this.options[i].dataDuration,
-        y: this.options[i].position + this.options[i].marginEnd,
+        y: this.options[i].position + this.options[i].marginStart,
+        i,
       }))
       .filter(
-        ({ x, step, y }) =>
-          step && y > Scroll.endPosition && x.dataset[step] !== "0"
+        ({ x, y, i }) =>
+          this.options[i].classStart &&
+          y > Scroll.startPosition &&
+          x.classList.contains(this.options[i].classStart)
       );
   }
+  // private getDurationElements() {
+  //   return this.elements
+  //     .map(({ x, i }) => ({
+  //       x: x,
+  //       step: this.options[i].dataDuration,
+  //       y: this.options[i].position + this.options[i].marginEnd,
+  //     }))
+  //     .filter(
+  //       ({ x, step, y }) =>
+  //         step && y > Scroll.endPosition && x.dataset[step] !== "0"
+  //     );
+  // }
   private getUpElements() {
-    return this.elements.filter(
-      ({ x, i }) =>
-        this.options[i].classEnd &&
-        this.options[i].position + this.options[i].marginEnd >
-          Scroll.endPosition &&
-        x.classList.contains(this.options[i].classEnd)
-    );
+    return this.elements
+      .map(({ x, i }) => ({
+        x: x,
+        y: this.options[i].position + this.options[i].marginEnd,
+        i,
+      }))
+      .filter(
+        ({ x, y, i }) =>
+          this.options[i].classEnd &&
+          y > Scroll.endPosition &&
+          x.classList.contains(this.options[i].classEnd)
+      );
   }
   //   static throttleEvent(fn: Function, dutation: number) {
   //     let inThrottle: any = false;
@@ -174,38 +193,31 @@ export default class Scroll {
   //       }, dutation);
   //     };
   //   }
-  protected static getLevel(y: number) {
-    let level = Math.ceil(((y - Scroll.windowSize) / Scroll.windowSize) * -100);
-    if (level < 0) level = 0;
-    if (level > 100) level = 100;
-    return level.toString();
-  }
-  public onNextStart(x: HTMLElement, i: number) {}
-  public onNextDutation(x: HTMLElement, y: number, i: number) {}
-  public onNextEnd(x: HTMLElement, i: number) {}
-  public onPrevStart(x: HTMLElement, i: number) {}
-  public onPrevDutation(x: HTMLElement, y: number, i: number) {}
-  public onPrevEnd(x: HTMLElement, i: number) {}
+
+  public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
+  public onNextEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
+  public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
+  public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   private onNext() {
-    this.getScrollDownElements().map(({ x, i }) => {
-      this.onNextStart(x, i);
+    this.getScrollDownElements().map(({ x, y, i }) => {
+      this.onNextStart({ x, y, i });
     });
-    this.getScrollDurationElements().map(({ x, y }, i) => {
-      this.onNextDutation(x, y, i);
-    });
-    this.getDownElements().map(({ x, i }) => {
-      this.onNextEnd(x, i);
+    // this.getScrollDurationElements().map(({ x, y }, i) => {
+    //   this.onNextDutation(x, y, i);
+    // });
+    this.getDownElements().map(({ x, y, i }) => {
+      this.onNextEnd({ x, y, i });
     });
   }
   private onPrev() {
-    this.getScrollUpElements().map(({ x, i }) => {
-      this.onPrevStart(x, i);
+    this.getScrollUpElements().map(({ x, y, i }) => {
+      this.onPrevStart({ x, y, i });
     });
-    this.getDurationElements().map(({ x, y }, i) => {
-      this.onPrevDutation(x, y, i);
-    });
-    this.getUpElements().map(({ x, i }) => {
-      this.onPrevEnd(x, i);
+    // this.getDurationElements().map(({ x, y }, i) => {
+    //   this.onPrevDutation(x, y, i);
+    // });
+    this.getUpElements().map(({ x, y, i }) => {
+      this.onPrevEnd({ x, y, i });
     });
   }
   private onScroll() {

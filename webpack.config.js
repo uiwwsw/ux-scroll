@@ -1,8 +1,12 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: "./index.ts",
+  entry: {
+    "index.js": [path.resolve(__dirname, "./index.ts")],
+    "demo.js": [path.resolve(__dirname, "./demo.ts")],
+  },
   module: {
     rules: [
       {
@@ -16,11 +20,10 @@ module.exports = {
         },
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.scss$/,
         use: [
+          MiniCssExtractPlugin.loader,
           // Creates `style` nodes from JS strings
-          "style-loader",
-          // Translates CSS into CommonJS
           "css-loader",
           // Compiles Sass to CSS
           "sass-loader",
@@ -31,13 +34,14 @@ module.exports = {
   resolve: {
     extensions: [".ts"],
   },
+  plugins: [new MiniCssExtractPlugin({ filename: "style.css" })],
   // output: {
   //   filename: "bundle.js",
   //   path: path.resolve(__dirname, "dist"),
   // },
   output: {
     path: path.resolve(__dirname, "./dist"),
-    filename: "index.js",
+    filename: "[name]",
     library: "ui-scroll",
     libraryTarget: "umd",
     globalObject: "this",

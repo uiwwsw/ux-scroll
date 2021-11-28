@@ -1,8 +1,23 @@
 .ux {
-  &--fade-up {
+  &--fade-down {
     transition: transform 0.5s, opacity 0.5s;
     opacity: 0;
     transform: translate(0, -100px);
+  }
+  &--fade-up {
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    transform: translate(0, 100px);
+  }
+  &--fade-left {
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    transform: translate(100px, 0);
+  }
+  &--fade-right {
+    transition: transform 0.5s, opacity 0.5s;
+    opacity: 0;
+    transform: translate(-100px, 0);
   }
   &__animated {
     opacity: 1;

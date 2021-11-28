@@ -1,4 +1,4 @@
-import Scroll, { InputOption, InputOptions } from "./scroll";
+import Scroll, { IndexOption, InputOption } from "./scroll";
 export default class ClassTransition extends Scroll {
   constructor({
     selector,
@@ -7,20 +7,20 @@ export default class ClassTransition extends Scroll {
   }: {
     selector: string;
     commonOptions?: InputOption;
-    options?: InputOptions;
+    options?: IndexOption<InputOption>;
   }) {
     super({ selector, options, commonOptions });
   }
-  public onNextStart(x: HTMLElement, i: number) {
+  public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     x.classList.add(this.options[i].classStart);
   }
-  public onNextEnd(x: HTMLElement, i: number) {
+  public onNextEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     x.classList.add(this.options[i].classEnd);
   }
-  public onPrevStart(x: HTMLElement, i: number) {
+  public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     x.classList.remove(this.options[i].classStart);
   }
-  public onPrevEnd(x: HTMLElement, i: number) {
+  public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     x.classList.remove(this.options[i].classEnd);
   }
 }
