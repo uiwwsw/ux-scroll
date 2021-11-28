@@ -1,8 +1,20 @@
-import ScrollEvent from "./src/scroll-event";
-import CountingNumber from "./src/counting-number";
+import ClassTransition from "./src/class-transition";
 import "./styles.scss";
-export { ScrollEvent };
+export { ClassTransition };
 
-const a = new CountingNumber({
+const a = new ClassTransition({
   selector: ".test",
+  commonOptions: {
+    classStart: "test11",
+    classEnd: "test132313121",
+  },
+  options: {
+    13: {
+      marginStart: "100px",
+    },
+    15: {
+      classStart: "ux--fade-up",
+      classEnd: "ux--fade-end",
+    },
+  },
 });
