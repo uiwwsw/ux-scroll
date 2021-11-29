@@ -1,3 +1,4 @@
+import "../styles.scss";
 export enum Direction {
   Y = "y",
   X = "x",

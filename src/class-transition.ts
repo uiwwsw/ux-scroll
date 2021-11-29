@@ -9,6 +9,10 @@ export default class ClassTransition extends Scroll {
     commonOptions?: InputOption;
     options?: IndexOption<InputOption>;
   }) {
+    commonOptions = {
+      classStart: "ux__transition--animated",
+      ...commonOptions,
+    };
     super({ selector, options, commonOptions });
   }
   public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {

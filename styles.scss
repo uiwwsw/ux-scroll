@@ -1,26 +1,67 @@
 .ux {
-  &--fade-down {
-    transition: transform 0.5s, opacity 0.5s;
-    opacity: 0;
-    transform: translate(0, -100px);
+  &__transition {
+    &--fade-down {
+      transition: transform 0.5s, opacity 0.5s;
+      opacity: 0;
+      transform: translate(0, -100px);
+    }
+    &--fade-up {
+      transition: transform 0.5s, opacity 0.5s;
+      opacity: 0;
+      transform: translate(0, 100px);
+    }
+    &--fade-left {
+      transition: transform 0.5s, opacity 0.5s;
+      opacity: 0;
+      transform: translate(100px, 0);
+    }
+    &--fade-right {
+      transition: transform 0.5s, opacity 0.5s;
+      opacity: 0;
+      transform: translate(-100px, 0);
+    }
+    &--animated {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
   }
-  &--fade-up {
-    transition: transform 0.5s, opacity 0.5s;
-    opacity: 0;
-    transform: translate(0, 100px);
+  &__sticky {
+    height: 100vh;
+    &__content {
+      width: 100%;
+      height: 100%;
+    }
   }
-  &--fade-left {
-    transition: transform 0.5s, opacity 0.5s;
-    opacity: 0;
-    transform: translate(100px, 0);
+  &__callback {
+    &--start {
+      > * {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+    }
+    &--end {
+      > * {
+        position: static;
+      }
+    }
   }
-  &--fade-right {
-    transition: transform 0.5s, opacity 0.5s;
-    opacity: 0;
-    transform: translate(-100px, 0);
-  }
-  &__animated {
-    opacity: 1;
-    transform: translate(0, 0);
+  &__counting {
+    display: flex;
+    &__number {
+      flex: 1;
+      > * {
+        position: absolute;
+        transition-duration: 150ms;
+        @for $i from 1 through 10 {
+          &:nth-child(#{$i}) {
+            $d: 21.16 * $i;
+            transform: rotateX(#{$d}deg) translate3d(0px, 0px, 90px);
+          }
+        }
+      }
+    }
   }
 }
