@@ -1,5 +1,9 @@
 import Scroll, { IndexOption, InputOption } from "./scroll";
-export default class Callback100 extends Scroll {
+export enum LEVEL {
+  START_DONE = "START_DONE",
+  END_DONE = "END_DONE",
+}
+export default class Callback extends Scroll {
   callbacks: IndexOption<Function>;
   constructor({
     selector,
@@ -13,35 +17,30 @@ export default class Callback100 extends Scroll {
     options?: IndexOption<InputOption>;
   }) {
     commonOptions = {
-      classStart: "ux__callback-100--start",
-      classEnd: "ux__callback-100--end",
+      classStart: "ux__callback--end",
+      classEnd: "ux__callback--start",
       ...commonOptions,
     };
     super({ selector, options, commonOptions });
     this.callbacks = callbacks;
   }
   private getLevel(y: number) {
-    let level = Math.ceil(
-      ((Scroll.startPosition - y) * 100) / Scroll.windowSize
-    );
-    if (level < 0) level = 0;
-    if (level > 100) level = 100;
-    return level;
+    return Math.ceil(((Scroll.startPosition - y) * 100) / Scroll.windowSize);
   }
   public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     const fn = this.callbacks[i];
     const step = this.getLevel(y);
-    fn && fn({ x, step, i });
+    const res = fn && fn({ x, step, i });
     !x.classList.contains(this.options[i].classEnd) &&
       x.classList.add(this.options[i].classEnd);
-    if (step === 100) x.classList.add(this.options[i].classStart);
+    if (res === LEVEL.START_DONE) x.classList.add(this.options[i].classStart);
   }
   public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     const fn = this.callbacks[i];
     const step = this.getLevel(y);
-    fn && fn({ x, step, i });
+    const res = fn && fn({ x, step, i });
     x.classList.contains(this.options[i].classStart) &&
       x.classList.remove(this.options[i].classStart);
-    if (step === 0) x.classList.remove(this.options[i].classEnd);
+    if (res === LEVEL.END_DONE) x.classList.remove(this.options[i].classEnd);
   }
 }

@@ -1,3 +1,3 @@
 import ClassTransition from "./src/class-transition";
-import Callback100 from "./src/callback-100";
-export { ClassTransition, Callback100 };
+import Callback, { LEVEL } from "./src/callback";
+export { ClassTransition, Callback, LEVEL };
