@@ -70,7 +70,13 @@ export default class Scroll {
       return Number(str.replace("%", "")) * Scroll.windowSize * 0.01;
     return Number(str) * Scroll.windowSize;
   }
-  private getOptions({ options, commonOptions }) {
+  private getOptions({
+    options,
+    commonOptions,
+  }: {
+    options?: IndexOption<InputOption>;
+    commonOptions?: InputOption;
+  }) {
     !options && (options = {});
     !commonOptions && (commonOptions = {});
     return this.elements.map(({ x, i }) => {
@@ -93,7 +99,7 @@ export default class Scroll {
   private getElements(selector: string) {
     return Array.prototype.slice
       .call(document.querySelectorAll(selector))
-      .map((x, i) => ({ x, i }));
+      .map((x: HTMLElement, i: number) => ({ x, i }));
   }
 
   static getWindowSize() {
