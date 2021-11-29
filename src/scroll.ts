@@ -205,10 +205,6 @@ export default class Scroll {
   public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   private onNext() {
-    console.log("dddd");
-
-    // console.log(this.elements);
-    // console.log(this.options);
     this.getScrollDownElements().map(({ x, y, i }) => {
       this.onNextStart({ x, y, i });
     });
