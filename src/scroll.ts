@@ -83,16 +83,16 @@ export default class Scroll {
       const position =
         Scroll.direction === Direction.Y ? x.offsetTop : x.offsetLeft;
       return {
-        position: position,
+        position,
         marginStart:
           this.getUnit(commonOptions?.marginStart) ||
           this.getUnit(options[i]?.marginStart),
         marginEnd:
           this.getUnit(commonOptions?.marginEnd) ||
           this.getUnit(options[i]?.marginEnd),
-        classStart: options[i]?.classStart || commonOptions?.classStart,
-        classEnd: options[i]?.classEnd || commonOptions?.classEnd,
-        dataDuration: options[i]?.dataDuration || commonOptions?.dataDuration,
+        classStart: commonOptions?.classStart || options[i]?.classStart,
+        classEnd: commonOptions?.classEnd || options[i]?.classEnd,
+        dataDuration: commonOptions?.dataDuration || options[i]?.dataDuration,
       };
     });
   }
@@ -205,6 +205,10 @@ export default class Scroll {
   public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   private onNext() {
+    console.log("dddd");
+
+    // console.log(this.elements);
+    // console.log(this.options);
     this.getScrollDownElements().map(({ x, y, i }) => {
       this.onNextStart({ x, y, i });
     });
