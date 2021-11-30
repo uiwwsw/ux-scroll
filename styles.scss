@@ -50,15 +50,37 @@
   }
   &__counting {
     display: flex;
-    &__number {
+
+    &__number-wrap {
+      position: relative;
       flex: 1;
-      > * {
-        position: absolute;
-        transition-duration: 150ms;
-        @for $i from 1 through 10 {
-          &:nth-child(#{$i}) {
-            $d: 21.16 * $i;
-            transform: rotateX(#{$d}deg) translate3d(0px, 0px, 90px);
+      overflow: hidden;
+      height: 2em;
+    }
+    &__number {
+      $deg: 20;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transition-duration: 150ms;
+      @for $i from 0 through 9 {
+        &--#{$i} {
+          $d: $deg * $i;
+          opacity: 1 - (abs($i * 0.3));
+          transform: rotateX(#{$d}deg) translate3d(-50%, -50%, 90px);
+        }
+      }
+      @for $i from 0 through 9 {
+        [data-value="#{$i}"] & {
+          @for $j from 0 through 9 {
+            &--#{$j} {
+              $o: ($j - $i) * $deg;
+              opacity: 1 - (abs(($j - $i) * 0.3));
+              transform: rotateX(#{$o}deg) translate3d(-50%, -50%, 90px);
+            }
           }
         }
       }
