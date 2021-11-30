@@ -1,11 +1,11 @@
 import Scroll, { IndexOption, InputOption } from "./scroll";
-export const CALLBACK_STARTED = Symbol("STARTED");
-export const CALLBACK_ENDED = Symbol("ENDED");
+export const CALLBACK_DOWN_DONE = Symbol("STARTED");
+export const CALLBACK_UP_DONE = Symbol("ENDED");
 // export symbol LEVEL = 'd' {
 //   START_DONE = "START_DONE",
 //   END_DONE = "END_DONE",
 // }
-export default class Callback extends Scroll {
+export default class UxScrollCallback extends Scroll {
   callbacks: IndexOption<Function>;
   constructor({
     selector,
@@ -35,7 +35,7 @@ export default class Callback extends Scroll {
     const res = fn && fn({ x, step, i });
     !x.classList.contains(this.options[i].classEnd) &&
       x.classList.add(this.options[i].classEnd);
-    if (res === CALLBACK_STARTED) x.classList.add(this.options[i].classStart);
+    if (res === CALLBACK_DOWN_DONE) x.classList.add(this.options[i].classStart);
   }
   public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     const fn = this.callbacks[i];
@@ -43,6 +43,6 @@ export default class Callback extends Scroll {
     const res = fn && fn({ x, step, i });
     x.classList.contains(this.options[i].classStart) &&
       x.classList.remove(this.options[i].classStart);
-    if (res === CALLBACK_ENDED) x.classList.remove(this.options[i].classEnd);
+    if (res === CALLBACK_UP_DONE) x.classList.remove(this.options[i].classEnd);
   }
 }

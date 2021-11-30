@@ -1,3 +1,11 @@
-import ClassTransition from "./src/class-transition";
-import Callback, { CALLBACK_ENDED, CALLBACK_STARTED } from "./src/callback";
-export { ClassTransition, Callback, CALLBACK_ENDED, CALLBACK_STARTED };
+import UxScrollTransition from "./src/ux-scroll-transition";
+import UxScrollCallback, {
+  CALLBACK_UP_DONE,
+  CALLBACK_DOWN_DONE,
+} from "./src/ux-scroll-callback";
+export {
+  UxScrollTransition,
+  UxScrollCallback,
+  CALLBACK_UP_DONE,
+  CALLBACK_DOWN_DONE,
+};

@@ -1,4 +1,5 @@
 import "../styles.scss";
+import throttle from "./throttle";
 export enum Direction {
   Y = "y",
   X = "x",
@@ -109,7 +110,7 @@ export default class Scroll {
       : window.outerWidth;
   }
 
-  private getScrollDownElements() {
+  private get getScrollDownElements() {
     return this.elements
       .map(({ x, i }) => ({
         x: x,
@@ -135,7 +136,7 @@ export default class Scroll {
   //         step && y < Scroll.startPosition && x.dataset[step] !== "100"
   //     );
   // }
-  private getDownElements() {
+  private get getDownElements() {
     return this.elements
       .map(({ x, i }) => ({
         x: x,
@@ -150,7 +151,7 @@ export default class Scroll {
       );
   }
 
-  private getScrollUpElements() {
+  private get getScrollUpElements() {
     return this.elements
       .map(({ x, i }) => ({
         x: x,
@@ -176,7 +177,7 @@ export default class Scroll {
   //         step && y > Scroll.endPosition && x.dataset[step] !== "0"
   //     );
   // }
-  private getUpElements() {
+  private get getUpElements() {
     return this.elements
       .map(({ x, i }) => ({
         x: x,
@@ -190,43 +191,33 @@ export default class Scroll {
           x.classList.contains(this.options[i].classEnd)
       );
   }
-  //   static throttleEvent(fn: Function, dutation: number) {
-  //     let inThrottle: any = false;
-  //     return (...args: any) => {
-  //       if (inThrottle !== false) return;
-  //       inThrottle = setTimeout(() => {
-  //         fn.call(null, args);
-  //         inThrottle = false;
-  //       }, dutation);
-  //     };
-  //   }
 
   public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   public onNextEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
-  private onNext() {
-    this.getScrollDownElements().map(({ x, y, i }) => {
+  private onNext = throttle(() => {
+    this.getScrollDownElements.map(({ x, y, i }) => {
       this.onNextStart({ x, y, i });
     });
     // this.getScrollDurationElements().map(({ x, y }, i) => {
     //   this.onNextDutation(x, y, i);
     // });
-    this.getDownElements().map(({ x, y, i }) => {
+    this.getDownElements.map(({ x, y, i }) => {
       this.onNextEnd({ x, y, i });
     });
-  }
-  private onPrev() {
-    this.getScrollUpElements().map(({ x, y, i }) => {
+  }, 100);
+  private onPrev = throttle(() => {
+    this.getScrollUpElements.map(({ x, y, i }) => {
       this.onPrevStart({ x, y, i });
     });
     // this.getDurationElements().map(({ x, y }, i) => {
     //   this.onPrevDutation(x, y, i);
     // });
-    this.getUpElements().map(({ x, y, i }) => {
+    this.getUpElements.map(({ x, y, i }) => {
       this.onPrevEnd({ x, y, i });
     });
-  }
+  }, 100);
   private onScroll() {
     if (Scroll.scrollPosition > window.scrollY) {
       this.onPrev();
@@ -240,6 +231,6 @@ export default class Scroll {
   }
   private addGlobalEvent() {
     window.onscroll = this.onScroll.bind(this);
-    window.onresize = Scroll.onResize;
+    window.onresize = throttle(Scroll.onResize, 100);
   }
 }

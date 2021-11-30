@@ -1,5 +1,5 @@
 import Scroll, { IndexOption, InputOption } from "./scroll";
-export default class ClassTransition extends Scroll {
+export default class UxScrollTransition extends Scroll {
   constructor({
     selector,
     commonOptions,
