@@ -1,3 +1,4 @@
+import Scroll from "./src/scroll";
 import UxScrollTransition from "./src/ux-scroll-transition";
 import UxScrollCallback, {
   CALLBACK_UP_DONE,

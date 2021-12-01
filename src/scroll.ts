@@ -30,38 +30,34 @@ export interface Elements {
   x: HTMLElement;
   i: number;
 }
+export interface Props {
+  selector: string;
+  commonOptions?: InputOption;
+  options?: IndexOption<InputOption>;
+}
 export default class Scroll {
+  private readonly props: Props;
   private elements: Elements[];
   public options: OutOption[];
 
-  protected static windowSize: number;
-  protected static scrollPosition = -1;
-  protected static direction = Direction.Y;
+  private scrollPosition = -1;
+  public windowSize: number;
+  private readonly direction = Direction.Y;
   // protected static size = Size.Y;
 
-  constructor({
-    selector,
-    commonOptions,
-    options,
-  }: {
-    selector: string;
-    commonOptions?: InputOption;
-    options?: IndexOption<InputOption>;
-  }) {
-    Scroll.windowSize = Scroll.getWindowSize();
-    this.elements = this.getElements(selector);
-    this.options = this.getOptions({ options, commonOptions });
-    this.addGlobalEvent();
+  constructor(props: Props) {
+    this.props = props;
+    this.onResize();
   }
-  public static get startPosition() {
-    return Scroll.scrollPosition + Scroll.windowSize;
+  public get startPosition() {
+    return this.scrollPosition + this.windowSize;
   }
-  public static get endPosition() {
-    return Scroll.scrollPosition;
+  public get endPosition() {
+    return this.scrollPosition;
   }
   private get index() {
     const number = this.elements.findIndex(
-      (x, i) => this.options[i].position > Scroll.windowSize
+      (x, i) => this.options[i].position > this.windowSize
     );
     return number === -1 ? this.elements.length : number;
   }
@@ -69,8 +65,8 @@ export default class Scroll {
     if (!str) return 0;
     if (str.includes("px")) return Number(str.replace("px", ""));
     if (str.includes("%"))
-      return Number(str.replace("%", "")) * Scroll.windowSize * 0.01;
-    return Number(str) * Scroll.windowSize;
+      return Number(str.replace("%", "")) * this.windowSize * 0.01;
+    return Number(str) * this.windowSize;
   }
   private getOptions({
     options,
@@ -83,7 +79,7 @@ export default class Scroll {
     !commonOptions && (commonOptions = {});
     return this.elements.map(({ x, i }) => {
       const position =
-        Scroll.direction === Direction.Y ? x.offsetTop : x.offsetLeft;
+        this.direction === Direction.Y ? x.offsetTop : x.offsetLeft;
       return {
         position,
         marginStart:
@@ -104,8 +100,8 @@ export default class Scroll {
       .map((x: HTMLElement, i: number) => ({ x, i }));
   }
 
-  static getWindowSize() {
-    return Scroll.direction === Direction.Y
+  private getWindowSize() {
+    return this.direction === Direction.Y
       ? window.outerHeight
       : window.outerWidth;
   }
@@ -120,7 +116,7 @@ export default class Scroll {
       .filter(
         ({ x, y, i }) =>
           this.options[i].classStart &&
-          y < Scroll.startPosition &&
+          y < this.startPosition &&
           !x.classList.contains(this.options[i].classStart)
       );
   }
@@ -146,7 +142,7 @@ export default class Scroll {
       .filter(
         ({ x, y, i }) =>
           this.options[i].classEnd &&
-          y < Scroll.endPosition &&
+          y < this.endPosition &&
           !x.classList.contains(this.options[i].classEnd)
       );
   }
@@ -161,7 +157,7 @@ export default class Scroll {
       .filter(
         ({ x, y, i }) =>
           this.options[i].classStart &&
-          y > Scroll.startPosition &&
+          y > this.startPosition &&
           x.classList.contains(this.options[i].classStart)
       );
   }
@@ -187,7 +183,7 @@ export default class Scroll {
       .filter(
         ({ x, y, i }) =>
           this.options[i].classEnd &&
-          y > Scroll.endPosition &&
+          y > this.endPosition &&
           x.classList.contains(this.options[i].classEnd)
       );
   }
@@ -197,6 +193,7 @@ export default class Scroll {
   public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
   private onNext = throttle(() => {
+    // console.log(this.elements, this);
     this.getScrollDownElements.map(({ x, y, i }) => {
       this.onNextStart({ x, y, i });
     });
@@ -208,6 +205,7 @@ export default class Scroll {
     });
   }, 100);
   private onPrev = throttle(() => {
+    // console.log(this.elements, this);
     this.getScrollUpElements.map(({ x, y, i }) => {
       this.onPrevStart({ x, y, i });
     });
@@ -218,19 +216,23 @@ export default class Scroll {
       this.onPrevEnd({ x, y, i });
     });
   }, 100);
-  private onScroll() {
-    if (Scroll.scrollPosition > window.scrollY) {
+  public onScroll() {
+    if (this.scrollPosition > window.scrollY) {
       this.onPrev();
     } else {
       this.onNext();
     }
-    Scroll.scrollPosition = window.scrollY;
+    this.scrollPosition = window.scrollY;
   }
-  static onResize() {
-    Scroll.windowSize = Scroll.getWindowSize();
-  }
-  private addGlobalEvent() {
-    window.onscroll = this.onScroll.bind(this);
-    window.onresize = throttle(Scroll.onResize, 100);
-  }
+  // static onResize = throttle(() => {
+  //   Scroll.windowSize = Scroll.getWindowSize();
+  // }, 100);
+  public onResize = throttle(() => {
+    this.elements = this.getElements(this.props.selector);
+    this.options = this.getOptions({
+      options: this.props.options,
+      commonOptions: this.props.commonOptions,
+    });
+    this.windowSize = this.getWindowSize();
+  }, 100);
 }

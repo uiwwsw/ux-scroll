@@ -27,7 +27,7 @@ export default class UxScrollCallback extends Scroll {
     this.callbacks = callbacks;
   }
   private getLevel(y: number) {
-    return Math.ceil(((Scroll.startPosition - y) * 100) / Scroll.windowSize);
+    return Math.ceil(((this.startPosition - y) * 100) / this.windowSize);
   }
   public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
     const fn = this.callbacks[i];

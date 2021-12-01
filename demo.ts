@@ -11,8 +11,9 @@ const ca = ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
   if (step === 100) return CALLBACK_DOWN_DONE;
   if (step === 0) return CALLBACK_UP_DONE;
 };
+
 const b = new UxScrollCallback({
-  selector: ".ux",
+  selector: ".ux__sticky",
   callbacks: {
     0: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
       return ca({ x, step, i });
@@ -34,6 +35,17 @@ const b = new UxScrollCallback({
     },
   },
 });
-// const a = new UxScrollTransition({
-//   selector: ".ux",
-// });
+
+const a = new UxScrollTransition({
+  selector: ".ux__transition",
+});
+
+window.onscroll = () => {
+  a.onScroll();
+  b.onScroll();
+};
+window.onresize = () => {
+  a.onResize();
+  b.onResize();
+};
+// console.log(a.elements, b.elements);
