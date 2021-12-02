@@ -13,9 +13,12 @@ const c = new UxScrollCallback({
       step: number;
       element: HTMLElement;
     }) => {
+      if (status !== "ux__callback--doing") return;
+      const test = document.getElementById("test") as HTMLInputElement;
+
       const children = element.children;
       const numberElement = children[0].children;
-      const number = step * 3;
+      const number = (step * Number(test.value)) / 100;
       const c1 = Math.floor(number % 10).toString();
       const c2 = Math.floor((number / 10) % 10).toString();
       const c3 = Math.floor((number / 100) % 10).toString();
@@ -118,11 +121,10 @@ const a = new UxScrollTransition({
 window.onscroll = () => {
   a.onScroll();
   b.onScroll();
-  // c.onScroll();
+  c.onScroll();
 };
 window.onresize = () => {
   a.onResize();
   b.onResize();
-  // c.onResize();
+  c.onResize();
 };
-// console.log(a.elements, b.elements);

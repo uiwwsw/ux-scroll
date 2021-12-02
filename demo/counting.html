@@ -8,6 +8,7 @@
     <style>
       body {
         margin: 0;
+        padding: 10vh 0;
       }
       .ux__counting {
         position: relative;
@@ -24,6 +25,14 @@
       }
       .ux__counting__number-wrap {
         font-size: 2em;
+      }
+      input {
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100px;
+        height: 100px;
       }
     </style>
     <title>Document</title>
@@ -80,6 +89,7 @@
           <span class="ux__counting__number ux__counting__number--9">9</span>
         </div>
       </div>
+      <input type="text" id="test" type="number" value="100" />
     </div>
     <script src="../dist/demo.js"></script>
   </body>

@@ -189,7 +189,6 @@ export default class Scroll {
       const res = this.#resetStatusFlag
         ? this.onNextStarting(index)
         : this.onPrevStarting(index);
-      console.log(res, this.#status[index].starting, "res");
       if (res) this.#status[index].starting = false;
     });
     this.#getDoingOptions.map(({ index }) => {
