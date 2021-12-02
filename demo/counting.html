@@ -8,7 +8,19 @@
     <style>
       body {
         margin: 0;
-        padding: 30vw;
+      }
+      .ux__counting {
+        position: relative;
+        height: 500vh;
+      }
+      .ux__counting > div {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
       }
       .ux__counting__number-wrap {
         font-size: 2em;
@@ -18,53 +30,55 @@
   </head>
   <body>
     <div class="ux ux__counting">
-      <div class="ux__counting__number-wrap">
-        <span class="ux__counting__number ux__counting__number--0">0</span>
-        <span class="ux__counting__number ux__counting__number--1">1</span>
-        <span class="ux__counting__number ux__counting__number--2">2</span>
-        <span class="ux__counting__number ux__counting__number--3">3</span>
-        <span class="ux__counting__number ux__counting__number--4">4</span>
-        <span class="ux__counting__number ux__counting__number--5">5</span>
-        <span class="ux__counting__number ux__counting__number--6">6</span>
-        <span class="ux__counting__number ux__counting__number--7">7</span>
-        <span class="ux__counting__number ux__counting__number--8">8</span>
-        <span class="ux__counting__number ux__counting__number--9">9</span>
-      </div>
-      <div class="ux__counting__number-wrap" data-value="9">
-        <span class="ux__counting__number ux__counting__number--0">0</span>
-        <span class="ux__counting__number ux__counting__number--1">1</span>
-        <span class="ux__counting__number ux__counting__number--2">2</span>
-        <span class="ux__counting__number ux__counting__number--3">3</span>
-        <span class="ux__counting__number ux__counting__number--4">4</span>
-        <span class="ux__counting__number ux__counting__number--5">5</span>
-        <span class="ux__counting__number ux__counting__number--6">6</span>
-        <span class="ux__counting__number ux__counting__number--7">7</span>
-        <span class="ux__counting__number ux__counting__number--8">8</span>
-        <span class="ux__counting__number ux__counting__number--9">9</span>
-      </div>
-      <div class="ux__counting__number-wrap" data-value="1">
-        <span class="ux__counting__number ux__counting__number--0">0</span>
-        <span class="ux__counting__number ux__counting__number--1">1</span>
-        <span class="ux__counting__number ux__counting__number--2">2</span>
-        <span class="ux__counting__number ux__counting__number--3">3</span>
-        <span class="ux__counting__number ux__counting__number--4">4</span>
-        <span class="ux__counting__number ux__counting__number--5">5</span>
-        <span class="ux__counting__number ux__counting__number--6">6</span>
-        <span class="ux__counting__number ux__counting__number--7">7</span>
-        <span class="ux__counting__number ux__counting__number--8">8</span>
-        <span class="ux__counting__number ux__counting__number--9">9</span>
-      </div>
-      <div class="ux__counting__number-wrap" data-value="7">
-        <span class="ux__counting__number ux__counting__number--0">0</span>
-        <span class="ux__counting__number ux__counting__number--1">1</span>
-        <span class="ux__counting__number ux__counting__number--2">2</span>
-        <span class="ux__counting__number ux__counting__number--3">3</span>
-        <span class="ux__counting__number ux__counting__number--4">4</span>
-        <span class="ux__counting__number ux__counting__number--5">5</span>
-        <span class="ux__counting__number ux__counting__number--6">6</span>
-        <span class="ux__counting__number ux__counting__number--7">7</span>
-        <span class="ux__counting__number ux__counting__number--8">8</span>
-        <span class="ux__counting__number ux__counting__number--9">9</span>
+      <div>
+        <div class="ux__counting__number-wrap" data-value="0">
+          <span class="ux__counting__number ux__counting__number--0">0</span>
+          <span class="ux__counting__number ux__counting__number--1">1</span>
+          <span class="ux__counting__number ux__counting__number--2">2</span>
+          <span class="ux__counting__number ux__counting__number--3">3</span>
+          <span class="ux__counting__number ux__counting__number--4">4</span>
+          <span class="ux__counting__number ux__counting__number--5">5</span>
+          <span class="ux__counting__number ux__counting__number--6">6</span>
+          <span class="ux__counting__number ux__counting__number--7">7</span>
+          <span class="ux__counting__number ux__counting__number--8">8</span>
+          <span class="ux__counting__number ux__counting__number--9">9</span>
+        </div>
+        <div class="ux__counting__number-wrap" data-value="9">
+          <span class="ux__counting__number ux__counting__number--0">0</span>
+          <span class="ux__counting__number ux__counting__number--1">1</span>
+          <span class="ux__counting__number ux__counting__number--2">2</span>
+          <span class="ux__counting__number ux__counting__number--3">3</span>
+          <span class="ux__counting__number ux__counting__number--4">4</span>
+          <span class="ux__counting__number ux__counting__number--5">5</span>
+          <span class="ux__counting__number ux__counting__number--6">6</span>
+          <span class="ux__counting__number ux__counting__number--7">7</span>
+          <span class="ux__counting__number ux__counting__number--8">8</span>
+          <span class="ux__counting__number ux__counting__number--9">9</span>
+        </div>
+        <div class="ux__counting__number-wrap" data-value="1">
+          <span class="ux__counting__number ux__counting__number--0">0</span>
+          <span class="ux__counting__number ux__counting__number--1">1</span>
+          <span class="ux__counting__number ux__counting__number--2">2</span>
+          <span class="ux__counting__number ux__counting__number--3">3</span>
+          <span class="ux__counting__number ux__counting__number--4">4</span>
+          <span class="ux__counting__number ux__counting__number--5">5</span>
+          <span class="ux__counting__number ux__counting__number--6">6</span>
+          <span class="ux__counting__number ux__counting__number--7">7</span>
+          <span class="ux__counting__number ux__counting__number--8">8</span>
+          <span class="ux__counting__number ux__counting__number--9">9</span>
+        </div>
+        <div class="ux__counting__number-wrap" data-value="7">
+          <span class="ux__counting__number ux__counting__number--0">0</span>
+          <span class="ux__counting__number ux__counting__number--1">1</span>
+          <span class="ux__counting__number ux__counting__number--2">2</span>
+          <span class="ux__counting__number ux__counting__number--3">3</span>
+          <span class="ux__counting__number ux__counting__number--4">4</span>
+          <span class="ux__counting__number ux__counting__number--5">5</span>
+          <span class="ux__counting__number ux__counting__number--6">6</span>
+          <span class="ux__counting__number ux__counting__number--7">7</span>
+          <span class="ux__counting__number ux__counting__number--8">8</span>
+          <span class="ux__counting__number ux__counting__number--9">9</span>
+        </div>
       </div>
     </div>
     <script src="../dist/demo.js"></script>
