@@ -1,37 +1,112 @@
-import {
-  UxScrollCallback,
-  UxScrollTransition,
-  CALLBACK_UP_DONE,
-  CALLBACK_DOWN_DONE,
-} from ".";
-const ca = ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-  if (step > 100) step = 100;
-  if (step < 0) step = 0;
-  x.setAttribute("style", `opacity: ${step / 100}`);
-  if (step === 100) return CALLBACK_DOWN_DONE;
-  if (step === 0) return CALLBACK_UP_DONE;
-};
-
+import { UxScrollCallback, UxScrollTransition } from ".";
+const c = new UxScrollCallback({
+  selector: ".ux__counting",
+  callbacks: {
+    0: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      const children = element.children;
+      const numberElement = children[0].children;
+      const number = step * 3;
+      const c1 = Math.floor(number % 10).toString();
+      const c2 = Math.floor((number / 10) % 10).toString();
+      const c3 = Math.floor((number / 100) % 10).toString();
+      const c4 = Math.floor((number / 1000) % 10).toString();
+      numberElement[0].setAttribute("data-value", c4);
+      numberElement[1].setAttribute("data-value", c3);
+      numberElement[2].setAttribute("data-value", c2);
+      numberElement[3].setAttribute("data-value", c1);
+    },
+  },
+});
 const b = new UxScrollCallback({
   selector: ".ux__sticky",
   callbacks: {
-    0: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-      return ca({ x, step, i });
+    0: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      element.setAttribute(status, step.toString());
     },
-    1: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-      return ca({ x, step, i });
+    1: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      element.setAttribute(status, step.toString());
     },
-    2: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-      return ca({ x, step, i });
+    2: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      element.setAttribute(status, step.toString());
     },
-    3: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-      return ca({ x, step, i });
+    3: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      element.setAttribute(status, step.toString());
     },
-    4: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-      return ca({ x, step, i });
+    4: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      element.setAttribute(status, step.toString());
     },
-    5: ({ x, step, i }: { x: HTMLElement; step: number; i: number }) => {
-      return ca({ x, step, i });
+    5: ({
+      status,
+      index,
+      step,
+      element,
+    }: {
+      status: string;
+      index: number;
+      step: number;
+      element: HTMLElement;
+    }) => {
+      element.setAttribute(status, step.toString());
     },
   },
 });
@@ -43,9 +118,11 @@ const a = new UxScrollTransition({
 window.onscroll = () => {
   a.onScroll();
   b.onScroll();
+  // c.onScroll();
 };
 window.onresize = () => {
   a.onResize();
   b.onResize();
+  // c.onResize();
 };
 // console.log(a.elements, b.elements);

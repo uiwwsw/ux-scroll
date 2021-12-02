@@ -8,67 +8,107 @@ export enum Size {
   Y = "height",
   X = "width",
 }
-// type OptionKey = "classStart" | "classEnd";
-export interface Option {
-  classStart?: string;
-  classEnd?: string;
-  dataDuration?: string;
+// type OptionKey = "start" | "started";
+export interface Option<T> {
+  starting?: T;
+  doing?: T;
+  ending?: T;
 }
-export interface OutOption extends Option {
-  position: number;
-  marginStart: number;
-  marginEnd: number;
+export interface InputOption extends Option<string> {
+  startMargin?: string;
+  endMargin?: string;
 }
-export interface InputOption extends Option {
-  marginStart?: string;
-  marginEnd?: string;
+export interface OutputOption extends Option<string> {
+  index: number;
+  size: number;
+  startPosition: number;
+  endPosition: number;
 }
 export interface IndexOption<T> {
   [T: number]: T;
 }
-export interface Elements {
-  x: HTMLElement;
-  i: number;
-}
+// export interface Element {
+//   x: HTMLElement;
+//   i: number;
+// }
 export interface Props {
   selector: string;
+  throttleTimer?: number;
   commonOptions?: InputOption;
   options?: IndexOption<InputOption>;
 }
 export default class Scroll {
-  private readonly props: Props;
-  private elements: Elements[];
-  public options: OutOption[];
+  readonly #props: Props;
+  protected elements: HTMLElement[];
+  protected options: OutputOption[];
+  readonly #status: Option<boolean>[];
 
-  private scrollPosition = -1;
-  public windowSize: number;
-  private readonly direction = Direction.Y;
+  protected scrollSize: number;
+  protected scrollPosition = -1;
+  protected windowSize: number;
+  readonly #direction = Direction.Y;
+  #resetStatusFlag: number = 1;
   // protected static size = Size.Y;
 
   constructor(props: Props) {
-    this.props = props;
-    this.onResize();
+    this.#props = props;
+    this.#onInit();
+    this.#status = this.elements.map(() => ({
+      starting: true,
+      doing: true,
+      ending: true,
+    }));
   }
-  public get startPosition() {
+  get scrollBottomPosition() {
     return this.scrollPosition + this.windowSize;
   }
-  public get endPosition() {
+  get scrollTopPosition() {
     return this.scrollPosition;
   }
-  private get index() {
-    const number = this.elements.findIndex(
-      (x, i) => this.options[i].position > this.windowSize
+  get #index() {
+    if (this.scrollTopPosition === 0) return 0;
+    if (this.scrollBottomPosition === this.scrollSize)
+      return this.options.length - 1;
+    return this.options.findIndex(
+      ({ startPosition, endPosition, index }) =>
+        startPosition >= this.scrollTopPosition
     );
-    return number === -1 ? this.elements.length : number;
   }
-  private getUnit(str: string) {
-    if (!str) return 0;
-    if (str.includes("px")) return Number(str.replace("px", ""));
-    if (str.includes("%"))
-      return Number(str.replace("%", "")) * this.windowSize * 0.01;
-    return Number(str) * this.windowSize;
+
+  get #getStartingOptions() {
+    return this.options.filter(
+      ({ startPosition, index, starting }) =>
+        starting &&
+        (this.#resetStatusFlag
+          ? startPosition <= this.scrollBottomPosition
+          : startPosition >= this.scrollTopPosition) &&
+        this.#status[index].starting
+    );
   }
-  private getOptions({
+  get #getDoingOptions() {
+    return this.options.filter(
+      ({ startPosition, index, doing, endPosition }) =>
+        doing &&
+        (this.#resetStatusFlag
+          ? startPosition <= this.scrollTopPosition
+          : endPosition >= this.scrollBottomPosition) &&
+        this.#status[index].doing
+    );
+  }
+  get #getEndingOptions() {
+    return this.options.filter(
+      ({ ending, index, endPosition }) =>
+        ending &&
+        (this.#resetStatusFlag
+          ? endPosition <= this.scrollBottomPosition
+          : endPosition >= this.scrollTopPosition) &&
+        this.#status[index].ending
+    );
+  }
+  get #throttleTimer() {
+    return this.#props?.throttleTimer || 0;
+  }
+  #getOptions({
     options,
     commonOptions,
   }: {
@@ -77,162 +117,119 @@ export default class Scroll {
   }) {
     !options && (options = {});
     !commonOptions && (commonOptions = {});
-    return this.elements.map(({ x, i }) => {
-      const position =
-        this.direction === Direction.Y ? x.offsetTop : x.offsetLeft;
+
+    return this.elements.map((x, index) => {
+      const startPosition =
+        this.#direction === Direction.Y ? x.offsetTop : x.offsetLeft;
+      const size =
+        this.#direction === Direction.Y ? x.offsetHeight : x.offsetWidth;
+      const endPosition = startPosition + size;
+      const startMargin = this.#getMargin(
+        commonOptions?.startMargin || options[index]?.startMargin
+      );
+      const endMargin = this.#getMargin(
+        commonOptions?.endMargin || options[index]?.endMargin
+      );
       return {
-        position,
-        marginStart:
-          this.getUnit(commonOptions?.marginStart) ||
-          this.getUnit(options[i]?.marginStart),
-        marginEnd:
-          this.getUnit(commonOptions?.marginEnd) ||
-          this.getUnit(options[i]?.marginEnd),
-        classStart: commonOptions?.classStart || options[i]?.classStart,
-        classEnd: commonOptions?.classEnd || options[i]?.classEnd,
-        dataDuration: commonOptions?.dataDuration || options[i]?.dataDuration,
+        index,
+        size,
+        startPosition: startPosition + startMargin,
+        endPosition: endPosition + endMargin,
+        starting: commonOptions?.starting || options[index]?.starting,
+        doing: commonOptions?.doing || options[index]?.doing,
+        ending: commonOptions?.ending || options[index]?.ending,
       };
     });
   }
-  private getElements(selector: string) {
-    return Array.prototype.slice
-      .call(document.querySelectorAll(selector))
-      .map((x: HTMLElement, i: number) => ({ x, i }));
+  #getMargin(margin: string) {
+    if (!margin) return 0;
+    if (margin.includes("px")) return Number(margin.replace("px", ""));
+    if (margin.includes("%"))
+      return (Number(margin.replace("%", "")) * this.windowSize) / 100;
+    return Number(margin) * this.windowSize;
+  }
+  #getElements(selector: string) {
+    return Array.prototype.slice.call(document.querySelectorAll(selector));
   }
 
-  private getWindowSize() {
-    return this.direction === Direction.Y
-      ? window.outerHeight
-      : window.outerWidth;
+  #getWindowSize() {
+    return this.#direction === Direction.Y
+      ? window.innerHeight
+      : window.innerWidth;
+  }
+  #getScrollSize() {
+    return this.#direction === Direction.Y
+      ? Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+          document.body.offsetHeight,
+          document.documentElement.offsetHeight,
+          document.body.clientHeight,
+          document.documentElement.clientHeight
+        )
+      : Math.max(
+          document.body.scrollWidth,
+          document.documentElement.scrollWidth,
+          document.body.offsetWidth,
+          document.documentElement.offsetWidth,
+          document.body.clientWidth,
+          document.documentElement.clientWidth
+        );
   }
 
-  private get getScrollDownElements() {
-    return this.elements
-      .map(({ x, i }) => ({
-        x: x,
-        y: this.options[i].position + this.options[i].marginStart,
-        i,
-      }))
-      .filter(
-        ({ x, y, i }) =>
-          this.options[i].classStart &&
-          y < this.startPosition &&
-          !x.classList.contains(this.options[i].classStart)
-      );
-  }
-  // private getScrollDurationElements() {
-  //   return this.elements
-  //     .map(({ x, i }) => ({
-  //       x: x,
-  //       step: this.options[i].dataDuration,
-  //       y: this.options[i].position + this.options[i].marginStart,
-  //     }))
-  //     .filter(
-  //       ({ x, step, y }) =>
-  //         step && y < Scroll.startPosition && x.dataset[step] !== "100"
-  //     );
-  // }
-  private get getDownElements() {
-    return this.elements
-      .map(({ x, i }) => ({
-        x: x,
-        y: this.options[i].position + this.options[i].marginEnd,
-        i,
-      }))
-      .filter(
-        ({ x, y, i }) =>
-          this.options[i].classEnd &&
-          y < this.endPosition &&
-          !x.classList.contains(this.options[i].classEnd)
-      );
-  }
+  onNextStarting(index: number): true | void {}
+  onNextDoing(index: number): true | void {}
+  onNextEnding(index: number): true | void {}
+  onPrevStarting(index: number): true | void {}
+  onPrevDoing(index: number): true | void {}
+  onPrevEnding(index: number): true | void {}
 
-  private get getScrollUpElements() {
-    return this.elements
-      .map(({ x, i }) => ({
-        x: x,
-        y: this.options[i].position + this.options[i].marginStart,
-        i,
-      }))
-      .filter(
-        ({ x, y, i }) =>
-          this.options[i].classStart &&
-          y > this.startPosition &&
-          x.classList.contains(this.options[i].classStart)
-      );
+  #scroll() {
+    this.#getStartingOptions.map(({ index }) => {
+      const res = this.#resetStatusFlag
+        ? this.onNextStarting(index)
+        : this.onPrevStarting(index);
+      console.log(res, this.#status[index].starting, "res");
+      if (res) this.#status[index].starting = false;
+    });
+    this.#getDoingOptions.map(({ index }) => {
+      const res = this.#resetStatusFlag
+        ? this.onNextDoing(index)
+        : this.onPrevDoing(index);
+      if (res) this.#status[index].doing = false;
+    });
+    this.#getEndingOptions.map(({ index }) => {
+      const res = this.#resetStatusFlag
+        ? this.onNextEnding(index)
+        : this.onPrevEnding(index);
+      if (res) this.#status[index].ending = false;
+    });
   }
-  // private getDurationElements() {
-  //   return this.elements
-  //     .map(({ x, i }) => ({
-  //       x: x,
-  //       step: this.options[i].dataDuration,
-  //       y: this.options[i].position + this.options[i].marginEnd,
-  //     }))
-  //     .filter(
-  //       ({ x, step, y }) =>
-  //         step && y > Scroll.endPosition && x.dataset[step] !== "0"
-  //     );
-  // }
-  private get getUpElements() {
-    return this.elements
-      .map(({ x, i }) => ({
-        x: x,
-        y: this.options[i].position + this.options[i].marginEnd,
-        i,
-      }))
-      .filter(
-        ({ x, y, i }) =>
-          this.options[i].classEnd &&
-          y > this.endPosition &&
-          x.classList.contains(this.options[i].classEnd)
-      );
-  }
-
-  public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
-  public onNextEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
-  public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
-  public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {}
-  private onNext = throttle(() => {
-    // console.log(this.elements, this);
-    this.getScrollDownElements.map(({ x, y, i }) => {
-      this.onNextStart({ x, y, i });
-    });
-    // this.getScrollDurationElements().map(({ x, y }, i) => {
-    //   this.onNextDutation(x, y, i);
-    // });
-    this.getDownElements.map(({ x, y, i }) => {
-      this.onNextEnd({ x, y, i });
-    });
-  }, 100);
-  private onPrev = throttle(() => {
-    // console.log(this.elements, this);
-    this.getScrollUpElements.map(({ x, y, i }) => {
-      this.onPrevStart({ x, y, i });
-    });
-    // this.getDurationElements().map(({ x, y }, i) => {
-    //   this.onPrevDutation(x, y, i);
-    // });
-    this.getUpElements.map(({ x, y, i }) => {
-      this.onPrevEnd({ x, y, i });
-    });
-  }, 100);
-  public onScroll() {
-    if (this.scrollPosition > window.scrollY) {
-      this.onPrev();
-    } else {
-      this.onNext();
+  #resetStatus(directive: number) {
+    this.#resetStatusFlag = directive;
+    for (const index in this.#status) {
+      this.#status[index].starting = true;
+      this.#status[index].doing = true;
+      this.#status[index].ending = true;
     }
-    this.scrollPosition = window.scrollY;
   }
-  // static onResize = throttle(() => {
-  //   Scroll.windowSize = Scroll.getWindowSize();
-  // }, 100);
-  public onResize = throttle(() => {
-    this.elements = this.getElements(this.props.selector);
-    this.options = this.getOptions({
-      options: this.props.options,
-      commonOptions: this.props.commonOptions,
+  onScroll = throttle(() => {
+    if (this.scrollPosition > window.scrollY) {
+      this.#resetStatusFlag && this.#resetStatus(0);
+    } else {
+      !this.#resetStatusFlag && this.#resetStatus(1);
+    }
+    this.#scroll();
+    this.scrollPosition = window.scrollY;
+  }, this.#throttleTimer);
+  #onInit() {
+    this.windowSize = this.#getWindowSize();
+    this.scrollSize = this.#getScrollSize();
+    this.elements = this.#getElements(this.#props.selector);
+    this.options = this.#getOptions({
+      options: this.#props.options,
+      commonOptions: this.#props.commonOptions,
     });
-    this.windowSize = this.getWindowSize();
-  }, 100);
+  }
+  onResize = throttle(this.#onInit, this.#throttleTimer);
 }

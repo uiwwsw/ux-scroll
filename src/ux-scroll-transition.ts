@@ -1,30 +1,22 @@
-import Scroll, { IndexOption, InputOption } from "./scroll";
+import Scroll, { Props } from "./scroll";
 export default class UxScrollTransition extends Scroll {
-  constructor({
-    selector,
-    commonOptions,
-    options,
-  }: {
-    selector: string;
-    commonOptions?: InputOption;
-    options?: IndexOption<InputOption>;
-  }) {
-    commonOptions = {
-      classStart: "ux__transition--animated",
-      ...commonOptions,
-    };
-    super({ selector, options, commonOptions });
+  constructor(props: Props) {
+    super({
+      ...props,
+      commonOptions: {
+        starting: "ux__transition--animated",
+        ending: "ux__transition--animated",
+        endMargin: "-1",
+        ...props.commonOptions,
+      },
+    });
   }
-  public onNextStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
-    x.classList.add(this.options[i].classStart);
+  onNextStarting(index: number): true {
+    this.elements[index].classList.add(this.options[index].starting);
+    return true;
   }
-  public onNextEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
-    x.classList.add(this.options[i].classEnd);
-  }
-  public onPrevStart({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
-    x.classList.remove(this.options[i].classStart);
-  }
-  public onPrevEnd({ x, y, i }: { x: HTMLElement; y: number; i: number }) {
-    x.classList.remove(this.options[i].classEnd);
+  onPrevEnding(index: number): true {
+    this.elements[index].classList.remove(this.options[index].starting);
+    return true;
   }
 }
