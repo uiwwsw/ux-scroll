@@ -44,17 +44,17 @@
       align-items: center;
       opacity: 0;
       transition-duration: 150ms;
-      @for $i from 0 through 9 {
+      @for $i from -1 through 10 {
         &--#{$i} {
           $d: $deg * $i;
           opacity: 1 - (abs($i * 0.3));
           transform: rotateX(#{$d}deg) translate3d(-50%, -50%, 90px);
         }
       }
-      @for $i from 0 through 9 {
-        [data-value="#{$i}"] & {
-          @for $j from 0 through 9 {
-            &--#{$j} {
+      @for $i from -1 through 10 {
+        [data-value="#{$i + 1}"] & {
+          @for $j from -1 through 10 {
+            &--#{$j + 1} {
               $o: ($j - $i) * $deg;
               opacity: 1 - (abs(($j - $i) * 0.3));
               transform: rotateX(#{$o}deg) translate3d(-50%, -50%, 90px);

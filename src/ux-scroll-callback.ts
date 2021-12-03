@@ -15,9 +15,9 @@ export default class UxScrollCallback extends Scroll {
     super({
       ...props,
       commonOptions: {
-        starting: "ux__callback--starting",
-        doing: "ux__callback--doing",
-        ending: "ux__callback--ending",
+        starting: "starting",
+        doing: "doing",
+        ending: "ending",
         ...props.commonOptions,
       },
     });

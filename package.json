@@ -2,6 +2,12 @@
   "name": "ux-scroll",
   "version": "0.1.1",
   "main": "dist/index.js",
+  "keywords": [
+    "apple",
+    "scroll",
+    "animation",
+    "library"
+  ],
   "repository": "https://uiwwsw@github.com/uiwwsw/ux-scroll.git",
   "author": "matthew <uiwwsw@icloud.com>",
   "license": "MIT",
