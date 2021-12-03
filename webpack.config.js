@@ -4,7 +4,7 @@ const path = require("path");
 module.exports = {
   mode: "development",
   entry: {
-    "dist/index.js": [path.resolve(__dirname, "./index.ts")],
+    "dist/index.js": [path.resolve(__dirname, "./src/index.ts")],
     "demo/demo.js": [path.resolve(__dirname, "./demo/demo.ts")],
   },
   module: {
@@ -34,7 +34,7 @@ module.exports = {
   resolve: {
     extensions: [".ts"],
   },
-  plugins: [new MiniCssExtractPlugin({ filename: "style.css" })],
+  plugins: [new MiniCssExtractPlugin({ filename: "./dist/style.css" })],
   // output: {
   //   filename: "bundle.js",
   //   path: path.resolve(__dirname, "dist"),

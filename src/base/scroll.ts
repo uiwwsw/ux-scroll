@@ -1,5 +1,5 @@
-import "../styles.scss";
-import throttle from "./throttle";
+import "../styles/styles.scss";
+import throttle from "../utils/throttle";
 export enum Direction {
   Y = "y",
   X = "x",
