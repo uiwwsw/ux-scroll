@@ -4,8 +4,8 @@ const path = require("path");
 module.exports = {
   mode: "development",
   entry: {
-    "index.js": [path.resolve(__dirname, "./index.ts")],
-    "demo.js": [path.resolve(__dirname, "./demo.ts")],
+    "dist/index.js": [path.resolve(__dirname, "./index.ts")],
+    "demo/demo.js": [path.resolve(__dirname, "./demo/demo.ts")],
   },
   module: {
     rules: [
@@ -40,7 +40,7 @@ module.exports = {
   //   path: path.resolve(__dirname, "dist"),
   // },
   output: {
-    path: path.resolve(__dirname, "./dist"),
+    path: path.resolve(__dirname, "./"),
     filename: "[name]",
     library: "ui-scroll",
     libraryTarget: "umd",

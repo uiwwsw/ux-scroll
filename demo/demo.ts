@@ -1,4 +1,4 @@
-import { UxScrollCallback, UxScrollTransition } from ".";
+import { UxScrollCallback, UxScrollTransition } from "..";
 
 const c = new UxScrollCallback({
   selector: ".ux__counting",

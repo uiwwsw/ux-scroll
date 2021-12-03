@@ -1,6 +1,6 @@
 {
   "name": "ux-scroll",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "main": "dist/index.js",
   "keywords": [
     "apple",
@@ -13,7 +13,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx webpack watch",
-    "build": "npx webpack build"
+    "build": "npx webpack build",
+    "remove-demo": ""
   },
   "devDependencies": {
     "typescript": "^4.5.2",
