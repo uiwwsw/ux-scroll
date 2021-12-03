@@ -8,29 +8,28 @@ export enum Size {
   Y = "height",
   X = "width",
 }
-// type OptionKey = "start" | "started";
 export interface Option<T> {
   starting?: T;
   doing?: T;
   ending?: T;
 }
 export interface InputOption extends Option<string> {
-  startMargin?: string;
-  endMargin?: string;
+  startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
+  endTopMargin?: string; // ending 이벤트중 top=>down 시 마진
+  startBottomMargin?: string; // starting 이벤트중 down=>top 시 마진
+  endBottomMargin?: string; // ending 이벤트중 down=>top 시 마진
 }
 export interface OutputOption extends Option<string> {
   index: number;
   size: number;
-  startPosition: number;
-  endPosition: number;
+  startTopPosition: number;
+  endTopPosition: number;
+  startBottomPosition: number;
+  endBottomPosition: number;
 }
 export interface IndexOption<T> {
   [T: number]: T;
 }
-// export interface Element {
-//   x: HTMLElement;
-//   i: number;
-// }
 export interface Props {
   selector: string;
   throttleTimer?: number;
@@ -39,25 +38,29 @@ export interface Props {
 }
 export default class Scroll {
   readonly #props: Props;
-  protected elements: HTMLElement[];
-  protected options: OutputOption[];
+  readonly #direction = Direction.Y;
   readonly #status: Option<boolean>[];
+
+  protected readonly elements: HTMLElement[];
+  protected options: OutputOption[];
 
   protected scrollSize: number;
   protected scrollPosition = -1;
   protected windowSize: number;
-  readonly #direction = Direction.Y;
-  #resetStatusFlag: number = 1;
-  // protected static size = Size.Y;
-
+  protected scrollDirection: number = 1;
+  readonly onResize: Function;
+  readonly onScroll: Function;
   constructor(props: Props) {
     this.#props = props;
-    this.#onInit();
+    this.elements = this.#getElements(this.#props.selector);
+    this.#onResize();
     this.#status = this.elements.map(() => ({
       starting: true,
       doing: true,
       ending: true,
     }));
+    this.onResize = throttle(this.#onResize, this.#throttleTimer);
+    this.onScroll = throttle(this.#onScroll, this.#throttleTimer);
   }
   get scrollBottomPosition() {
     return this.scrollPosition + this.windowSize;
@@ -65,48 +68,48 @@ export default class Scroll {
   get scrollTopPosition() {
     return this.scrollPosition;
   }
-  get #index() {
-    if (this.scrollTopPosition === 0) return 0;
-    if (this.scrollBottomPosition === this.scrollSize)
-      return this.options.length - 1;
-    return this.options.findIndex(
-      ({ startPosition, endPosition, index }) =>
-        startPosition >= this.scrollTopPosition
-    );
-  }
+  // get #index() {
+  //   if (this.scrollTopPosition === 0) return 0;
+  //   if (this.scrollBottomPosition === this.scrollSize)
+  //     return this.options.length - 1;
+  //   return this.options.findIndex(
+  //     ({ startPosition, endPosition, index }) =>
+  //       startPosition >= this.scrollTopPosition
+  //   );
+  // }
 
   get #getStartingOptions() {
     return this.options.filter(
-      ({ startPosition, index, starting }) =>
+      ({ startTopPosition, startBottomPosition, index, starting }) =>
         starting &&
-        (this.#resetStatusFlag
-          ? startPosition <= this.scrollBottomPosition
-          : startPosition >= this.scrollTopPosition) &&
+        (this.scrollDirection
+          ? startTopPosition <= this.scrollBottomPosition
+          : startBottomPosition >= this.scrollTopPosition) &&
         this.#status[index].starting
     );
   }
   get #getDoingOptions() {
     return this.options.filter(
-      ({ startPosition, index, doing, endPosition }) =>
+      ({ startTopPosition, endBottomPosition, index, doing }) =>
         doing &&
-        (this.#resetStatusFlag
-          ? startPosition <= this.scrollTopPosition
-          : endPosition >= this.scrollBottomPosition) &&
+        (this.scrollDirection
+          ? startTopPosition <= this.scrollTopPosition
+          : endBottomPosition >= this.scrollBottomPosition) &&
         this.#status[index].doing
     );
   }
   get #getEndingOptions() {
     return this.options.filter(
-      ({ ending, index, endPosition }) =>
+      ({ ending, index, endTopPosition, endBottomPosition }) =>
         ending &&
-        (this.#resetStatusFlag
-          ? endPosition <= this.scrollBottomPosition
-          : endPosition >= this.scrollTopPosition) &&
+        (this.scrollDirection
+          ? endTopPosition <= this.scrollBottomPosition
+          : endBottomPosition >= this.scrollTopPosition) &&
         this.#status[index].ending
     );
   }
   get #throttleTimer() {
-    return this.#props?.throttleTimer || 0;
+    return this.#props.throttleTimer || 0;
   }
   #getOptions({
     options,
@@ -124,17 +127,27 @@ export default class Scroll {
       const size =
         this.#direction === Direction.Y ? x.offsetHeight : x.offsetWidth;
       const endPosition = startPosition + size;
-      const startMargin = this.#getMargin(
-        commonOptions?.startMargin || options[index]?.startMargin
+      const startTopMargin = this.#getMargin(
+        commonOptions?.startTopMargin || options[index]?.startTopMargin
       );
-      const endMargin = this.#getMargin(
-        commonOptions?.endMargin || options[index]?.endMargin
+      const endTopMargin = this.#getMargin(
+        commonOptions?.endTopMargin || options[index]?.endTopMargin
+      );
+      const startBottomMargin = this.#getMargin(
+        commonOptions?.startBottomMargin || options[index]?.startBottomMargin
+      );
+      const endBottomMargin = this.#getMargin(
+        commonOptions?.endBottomMargin || options[index]?.endBottomMargin
       );
       return {
         index,
         size,
-        startPosition: startPosition + startMargin,
-        endPosition: endPosition + endMargin,
+        // startPosition: startPosition,
+        // endPosition: endPosition,
+        startTopPosition: startPosition + startTopMargin,
+        endTopPosition: endPosition + endTopMargin,
+        startBottomPosition: startPosition + startBottomMargin,
+        endBottomPosition: endPosition + endBottomMargin,
         starting: commonOptions?.starting || options[index]?.starting,
         doing: commonOptions?.doing || options[index]?.doing,
         ending: commonOptions?.ending || options[index]?.ending,
@@ -177,58 +190,62 @@ export default class Scroll {
         );
   }
 
-  onNextStarting(index: number): true | void {}
-  onNextDoing(index: number): true | void {}
-  onNextEnding(index: number): true | void {}
-  onPrevStarting(index: number): true | void {}
-  onPrevDoing(index: number): true | void {}
-  onPrevEnding(index: number): true | void {}
-
-  #scroll() {
+  #checkOptions() {
     this.#getStartingOptions.map(({ index }) => {
-      const res = this.#resetStatusFlag
-        ? this.onNextStarting(index)
-        : this.onPrevStarting(index);
+      const res = this.onStarting(index);
       if (res) this.#status[index].starting = false;
     });
     this.#getDoingOptions.map(({ index }) => {
-      const res = this.#resetStatusFlag
-        ? this.onNextDoing(index)
-        : this.onPrevDoing(index);
+      const res = this.onDoing(index);
       if (res) this.#status[index].doing = false;
     });
     this.#getEndingOptions.map(({ index }) => {
-      const res = this.#resetStatusFlag
-        ? this.onNextEnding(index)
-        : this.onPrevEnding(index);
+      const res = this.onEnding(index);
       if (res) this.#status[index].ending = false;
     });
   }
   #resetStatus(directive: number) {
-    this.#resetStatusFlag = directive;
+    this.scrollDirection = directive;
     for (const index in this.#status) {
       this.#status[index].starting = true;
       this.#status[index].doing = true;
       this.#status[index].ending = true;
     }
   }
-  onScroll = throttle(() => {
+  #onScroll = this.#throttleUsingRaf(() => {
+    if (!this.elements) return;
     if (this.scrollPosition > window.scrollY) {
-      this.#resetStatusFlag && this.#resetStatus(0);
+      this.scrollDirection && this.#resetStatus(0);
     } else {
-      !this.#resetStatusFlag && this.#resetStatus(1);
+      !this.scrollDirection && this.#resetStatus(1);
     }
-    this.#scroll();
+    this.#checkOptions();
     this.scrollPosition = window.scrollY;
-  }, this.#throttleTimer);
-  #onInit() {
+  });
+  #onResize = this.#throttleUsingRaf(() => {
+    if (!this.elements) return;
     this.windowSize = this.#getWindowSize();
     this.scrollSize = this.#getScrollSize();
-    this.elements = this.#getElements(this.#props.selector);
     this.options = this.#getOptions({
       options: this.#props.options,
       commonOptions: this.#props.commonOptions,
     });
+  });
+  #throttleUsingRaf(callback: Function) {
+    let ticking = false;
+
+    return () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          callback();
+          ticking = false;
+        });
+      }
+    };
   }
-  onResize = throttle(this.#onInit, this.#throttleTimer);
+
+  onStarting(index: number): true | void {}
+  onDoing(index: number): true | void {}
+  onEnding(index: number): true | void {}
 }

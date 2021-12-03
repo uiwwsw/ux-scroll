@@ -52,8 +52,10 @@ interface Props {
   commonOptions?: {
     starting?: string; // 트렌지션 클래스 네임 ux__transition--animated
     ending?: string; // 트렌지션 클래스 네임 ux__transition--animated
-    startMargin?: string; // 스크롤 다운 시 이벤트 발생 시점 변경값 px % 배수로 작성가능
-    endMargin?: string; // -1 => 스크롤 업 시 트렌지션이 보이고 스크롤업 시 화면 변화를 숨기기 위한 숫자
+    startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
+    endTopMargin?: string; // ending 이벤트중 top=>down 시 마진
+    startBottomMargin?: string; // starting 이벤트중 down=>top 시 마진
+    endBottomMargin?: string; // ending 이벤트중 down=>top 시 마진
   };
   options?: {
     //0: commonOptions 개별 엘리먼트 별 옵션 지정 가능

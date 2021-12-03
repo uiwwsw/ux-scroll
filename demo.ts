@@ -14,7 +14,7 @@ const c = new UxScrollCallback({
       step: number;
       element: HTMLElement;
     }) => {
-      if (status !== "ux__callback--doing") return;
+      if (status !== "doing") return;
       const test = document.getElementById("test") as HTMLInputElement;
 
       const children = element.children;
@@ -32,6 +32,7 @@ const c = new UxScrollCallback({
   },
 });
 const b = new UxScrollCallback({
+  // throttleTimer: 100,
   selector: ".ux__sticky",
   callbacks: {
     0: ({
