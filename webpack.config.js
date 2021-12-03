@@ -4,20 +4,21 @@ const path = require("path");
 module.exports = {
   mode: "development",
   entry: {
-    "dist/index.js": [path.resolve(__dirname, "./src/index.ts")],
-    "demo/demo.js": [path.resolve(__dirname, "./demo/demo.ts")],
+    "index.js": [path.resolve(__dirname, "./src/index.ts")],
   },
   module: {
     rules: [
       {
         test: /\.ts$/,
         exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-typescript"],
+        use: [
+          {
+            loader: "babel-loader",
           },
-        },
+          {
+            loader: "ts-loader",
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -34,15 +35,15 @@ module.exports = {
   resolve: {
     extensions: [".ts"],
   },
-  plugins: [new MiniCssExtractPlugin({ filename: "./dist/style.css" })],
+  plugins: [new MiniCssExtractPlugin({ filename: "./style.css" })],
   // output: {
   //   filename: "bundle.js",
   //   path: path.resolve(__dirname, "dist"),
   // },
   output: {
-    path: path.resolve(__dirname, "./"),
+    path: path.resolve(__dirname, "./dist"),
     filename: "[name]",
-    library: "ui-scroll",
+    library: "ux-scroll",
     libraryTarget: "umd",
     globalObject: "this",
     umdNamedDefine: true,
