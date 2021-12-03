@@ -1,6 +1,6 @@
 {
-  "name": "@uiwwsw/ux-scroll",
-  "version": "0.1.14",
+  "name": "ux-scroll",
+  "version": "0.1.15",
   "main": "dist/index.js",
   "keywords": [
     "apple",
