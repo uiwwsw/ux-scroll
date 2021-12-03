@@ -1,5 +1,5 @@
 import "../styles/styles.scss";
-import throttle from "../utils/throttle";
+// import throttle from "../utils/throttle";
 export enum Direction {
   Y = "y",
   X = "x",
@@ -59,8 +59,8 @@ export default class Scroll {
       doing: true,
       ending: true,
     }));
-    this.onResize = throttle(this.#onResize, this.#throttleTimer);
-    this.onScroll = throttle(this.#onScroll, this.#throttleTimer);
+    this.onResize = this.#setThrottle(this.#onResize, this.#throttleTimer);
+    this.onScroll = this.#setThrottle(this.#onScroll, this.#throttleTimer);
   }
   get scrollBottomPosition() {
     return this.scrollPosition + this.windowSize;
@@ -212,7 +212,7 @@ export default class Scroll {
       this.#status[index].ending = true;
     }
   }
-  #onScroll = this.#throttleUsingRaf(() => {
+  #onScroll = this.#requestAnimationFrame(() => {
     if (!this.elements) return;
     if (this.scrollPosition > window.scrollY) {
       this.scrollDirection && this.#resetStatus(0);
@@ -222,7 +222,7 @@ export default class Scroll {
     this.#checkOptions();
     this.scrollPosition = window.scrollY;
   });
-  #onResize = this.#throttleUsingRaf(() => {
+  #onResize = this.#requestAnimationFrame(() => {
     if (!this.elements) return;
     this.windowSize = this.#getWindowSize();
     this.scrollSize = this.#getScrollSize();
@@ -231,7 +231,7 @@ export default class Scroll {
       commonOptions: this.#props.commonOptions,
     });
   });
-  #throttleUsingRaf(callback: Function) {
+  #requestAnimationFrame(callback: Function) {
     let ticking = false;
 
     return () => {
@@ -242,6 +242,16 @@ export default class Scroll {
           ticking = false;
         });
       }
+    };
+  }
+  #setThrottle(callback: Function, wait: number) {
+    let inThrottle: any;
+    return (...arg: any) => {
+      if (inThrottle) return;
+      inThrottle = setTimeout(() => {
+        callback.call(this, arg);
+        inThrottle = false;
+      }, wait);
     };
   }
 
