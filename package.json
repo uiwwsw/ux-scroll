@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "npx webpack watch",
-    "publish": "npx webpack build && npm install && npm publish"
+    "build": "npx webpack build"
   },
   "devDependencies": {
     "typescript": "^4.5.2",
