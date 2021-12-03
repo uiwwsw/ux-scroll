@@ -1,3 +1,3 @@
-import UxScrollTransition from "./base/ux-scroll-transition";
-import UxScrollCallback from "./base/ux-scroll-callback";
+import "./styles/styles.scss";
+import { UxScrollTransition, UxScrollCallback } from "./base";
 export { UxScrollTransition, UxScrollCallback };

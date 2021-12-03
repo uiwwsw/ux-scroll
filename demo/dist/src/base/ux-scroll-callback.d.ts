@@ -4,7 +4,6 @@ export interface InputOptionForCallback extends InputOption {
     endTopMargin?: string;
     startBottomMargin?: string;
     endBottomMargin?: string;
-    frame?: number;
 }
 export interface PropsExtends extends Props {
     callbacks: IndexOption<Function>;

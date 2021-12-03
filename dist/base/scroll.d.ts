@@ -1,4 +1,3 @@
-import "../styles/styles.scss";
 export declare enum Direction {
     Y = "y",
     X = "x"
@@ -11,6 +10,7 @@ export interface Option<T> {
     starting?: T;
     doing?: T;
     ending?: T;
+    frame?: number;
 }
 export interface InputOption extends Option<string> {
     startTopMargin?: string;

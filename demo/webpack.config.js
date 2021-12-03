@@ -38,7 +38,6 @@ module.exports = {
   resolve: {
     extensions: [".ts"],
   },
-  plugins: [new MiniCssExtractPlugin({ filename: "./style.css" })],
   // output: {
   //   filename: "bundle.js",
   //   path: path.resolve(__dirname, "dist"),
@@ -46,9 +45,5 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "[name]",
-    library: "ux-scroll",
-    libraryTarget: "umd",
-    globalObject: "this",
-    umdNamedDefine: true,
   },
 };

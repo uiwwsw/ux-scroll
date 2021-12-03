@@ -1,5 +1,5 @@
 // import { UxScrollCallback, UxScrollTransition } from "ux-scroll";
-import { UxScrollCallback, UxScrollTransition } from "../../src/index";
+import { UxScrollCallback, UxScrollTransition } from "../../src/base";
 
 const c = new UxScrollCallback({
   selector: ".ux__counting",
@@ -47,6 +47,7 @@ const b = new UxScrollCallback({
       step: number;
       element: HTMLElement;
     }) => {
+      console.log(status);
       element.setAttribute(status, step.toString());
     },
     1: ({

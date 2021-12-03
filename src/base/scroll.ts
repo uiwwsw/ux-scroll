@@ -1,4 +1,3 @@
-import "../styles/styles.scss";
 // import throttle from "../utils/throttle";
 export enum Direction {
   Y = "y",
@@ -12,6 +11,7 @@ export interface Option<T> {
   starting?: T;
   doing?: T;
   ending?: T;
+  frame?: number;
 }
 export interface InputOption extends Option<string> {
   startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
@@ -50,6 +50,7 @@ export default class Scroll {
   protected scrollDirection: number = 1;
   readonly onResize: Function;
   readonly onScroll: Function;
+
   constructor(props: Props) {
     this.#props = props;
     this.elements = this.#getElements(this.#props.selector);
@@ -148,9 +149,10 @@ export default class Scroll {
         endTopPosition: endPosition + endTopMargin,
         startBottomPosition: startPosition + startBottomMargin,
         endBottomPosition: endPosition + endBottomMargin,
-        starting: commonOptions?.starting || options[index]?.starting,
-        doing: commonOptions?.doing || options[index]?.doing,
-        ending: commonOptions?.ending || options[index]?.ending,
+        starting: commonOptions?.starting || options[index]?.starting || null,
+        doing: commonOptions?.doing || options[index]?.doing || null,
+        ending: commonOptions?.ending || options[index]?.ending || null,
+        frame: commonOptions?.frame || options[index]?.frame || null,
       };
     });
   }
