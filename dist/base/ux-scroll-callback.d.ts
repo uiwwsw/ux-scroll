@@ -11,6 +11,7 @@ export interface PropsExtends extends Props {
     options?: IndexOption<InputOptionForCallback>;
 }
 export interface CallbackProps {
+    scrollDirection: 0 | 1;
     status: string;
     index: number;
     step: number;

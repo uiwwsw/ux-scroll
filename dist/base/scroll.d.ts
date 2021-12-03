@@ -42,7 +42,7 @@ export default class Scroll {
     protected scrollSize: number;
     protected scrollPosition: number;
     protected windowSize: number;
-    protected scrollDirection: number;
+    protected scrollDirection: 0 | 1;
     readonly onResize: Function;
     readonly onScroll: Function;
     constructor(props: Props);

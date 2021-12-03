@@ -38,10 +38,8 @@ module.exports = {
   resolve: {
     extensions: [".ts"],
   },
-  // output: {
-  //   filename: "bundle.js",
-  //   path: path.resolve(__dirname, "dist"),
-  // },
+  plugins: [new MiniCssExtractPlugin({ filename: "./style.css" })],
+
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "[name]",

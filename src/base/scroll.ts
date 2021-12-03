@@ -47,7 +47,7 @@ export default class Scroll {
   protected scrollSize: number;
   protected scrollPosition = -1;
   protected windowSize: number;
-  protected scrollDirection: number = 1;
+  protected scrollDirection: 0 | 1 = 1;
   readonly onResize: Function;
   readonly onScroll: Function;
 
@@ -206,7 +206,7 @@ export default class Scroll {
       if (res) this.#status[index].ending = false;
     });
   }
-  #resetStatus(directive: number) {
+  #resetStatus(directive: 0 | 1) {
     this.scrollDirection = directive;
     for (const index in this.#status) {
       this.#status[index].starting = true;
@@ -217,13 +217,16 @@ export default class Scroll {
   #onScroll = this.#requestAnimationFrame(() => {
     if (!this.elements) return;
     if (this.scrollPosition > window.scrollY) {
+      // console.log("업");
       this.scrollDirection && this.#resetStatus(0);
-    } else {
+    } else if (this.scrollPosition < window.scrollY) {
+      // console.log("다운");
       !this.scrollDirection && this.#resetStatus(1);
     }
     this.#checkOptions();
     this.scrollPosition = window.scrollY;
   });
+
   #onResize = this.#requestAnimationFrame(() => {
     if (!this.elements) return;
     this.windowSize = this.#getWindowSize();

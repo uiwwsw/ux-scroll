@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.uiwwsw-demo {
+  &__start-element {
+    display: flex;
+    width: fit-content;
+    height: 100vh;
+    font-size: 100px;
+    align-items: center;
+    margin: auto;
+  }
+  &__ux-scroll {
+    position: relative;
+    height: 500vh;
+    &__content {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      .started & {
+        position: fixed;
+      }
+      &__item {
+        &--1 {
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transform-origin: top left;
+          }
+          .text {
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: 0;
+            font-size: 4vmax;
+            transition: opacity 0.3s;
+            max-width: calc(100vw - 330px);
+          }
+        }
+      }
+    }
+  }
+}

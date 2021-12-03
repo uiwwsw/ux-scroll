@@ -11,6 +11,7 @@ export interface PropsExtends extends Props {
   options?: IndexOption<InputOptionForCallback>;
 }
 export interface CallbackProps {
+  scrollDirection: 0 | 1;
   status: string;
   index: number;
   step: number;
@@ -55,6 +56,7 @@ export default class UxScrollCallback extends Scroll {
     const element = this.elements[index];
     callback &&
       callback({
+        scrollDirection: this.scrollDirection,
         status,
         index,
         step,
