@@ -1,14 +1,7 @@
 {
-  "name": "ux-scroll",
+  "name": "demo",
   "version": "0.1.20",
   "main": "dist/index.js",
-  "keywords": [
-    "apple",
-    "scroll",
-    "animation",
-    "library"
-  ],
-  "repository": "https://uiwwsw@github.com/uiwwsw/ux-scroll.git",
   "author": "uiwwsw",
   "license": "MIT",
   "scripts": {
@@ -28,6 +21,7 @@
     "mini-css-extract-plugin": "^2.4.5",
     "sass": "^1.43.5",
     "sass-loader": "^12.3.0",
-    "ts-loader": "^9.2.6"
+    "ts-loader": "^9.2.6",
+    "ux-scroll": "^0.1.20"
   }
 }
