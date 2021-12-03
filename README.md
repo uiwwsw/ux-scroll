@@ -19,6 +19,10 @@ import {UxScrollCallback} from 'ux-scroll';
 const uxScrollCallback = new UxScrollCallback(options: Props)
 interface Props {
   selector: string; // css selector
+  options: {},
+  commonOption: {
+
+  },
   callbacks?: {
     0: ({
             status,

@@ -1,7 +1,15 @@
-import Scroll, { IndexOption, Props } from "./scroll";
-interface PropsExtends extends Props {
-    callbacks: IndexOption<Function>;
+import Scroll, { IndexOption, InputOption, Props } from "./scroll";
+export interface InputOptionForCallback extends InputOption {
+    startTopMargin?: string;
+    endTopMargin?: string;
+    startBottomMargin?: string;
+    endBottomMargin?: string;
     frame?: number;
+}
+export interface PropsExtends extends Props {
+    callbacks: IndexOption<Function>;
+    commonOptions?: InputOptionForCallback;
+    options?: IndexOption<InputOptionForCallback>;
 }
 export interface CallbackProps {
     status: string;
@@ -17,4 +25,3 @@ export default class UxScrollCallback extends Scroll {
     onDoing(index: number): true | void;
     onEnding(index: number): true | void;
 }
-export {};

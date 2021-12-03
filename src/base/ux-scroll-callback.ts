@@ -1,7 +1,15 @@
-import Scroll, { IndexOption, Props } from "./scroll";
-interface PropsExtends extends Props {
-  callbacks: IndexOption<Function>;
+import Scroll, { IndexOption, InputOption, Props } from "./scroll";
+export interface InputOptionForCallback extends InputOption {
+  startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
+  endTopMargin?: string; // ending 이벤트중 top=>down 시 마진
+  startBottomMargin?: string; // starting 이벤트중 down=>top 시 마진
+  endBottomMargin?: string; // ending 이벤트중 down=>top 시 마진
   frame?: number;
+}
+export interface PropsExtends extends Props {
+  callbacks: IndexOption<Function>;
+  commonOptions?: InputOptionForCallback;
+  options?: IndexOption<InputOptionForCallback>;
 }
 export interface CallbackProps {
   status: string;
@@ -12,7 +20,7 @@ export interface CallbackProps {
 export type Callback = (props: CallbackProps) => true | void;
 export default class UxScrollCallback extends Scroll {
   readonly #callbacks: IndexOption<Function>;
-  readonly #frame;
+  readonly #frames: number[];
   constructor(props: PropsExtends) {
     super({
       ...props,
@@ -20,72 +28,25 @@ export default class UxScrollCallback extends Scroll {
         starting: "starting",
         doing: "doing",
         ending: "ending",
+        frame: 1000,
         ...props.commonOptions,
       },
     });
-    this.#frame = props.frame || 1000;
+    this.#frames = this.options.map(
+      ({ index }) => props.options[index].frame || props.commonOptions.frame
+    );
     this.#callbacks = props.callbacks;
   }
-  #getStep(level: number) {
+  #getStep(level: number, frame: number) {
     let step = level;
-    if (level > this.#frame) step = this.#frame;
+    if (level > frame) step = frame;
     if (level < 0) step = 0;
     return step;
   }
-  onStarting(index: number): true | void {
-    const callback = this.#callbacks[index] as Callback;
-    const position = this.scrollDirection
-      ? this.options[index].startTopPosition
-      : this.options[index].startBottomPosition;
-    const level = Math.ceil(
-      ((this.scrollBottomPosition - position) / this.windowSize) * this.#frame
-    );
-    const step = this.#getStep(level);
-    const element = this.elements[index];
-    callback &&
-      callback({
-        status: this.options[index].starting,
-        index,
-        step,
-        element,
-      });
 
-    if (level < 0 || level > this.#frame) return true;
-  }
-  onDoing(index: number): true | void {
+  #callback(index: number, level: number, frame: number) {
     const callback = this.#callbacks[index] as Callback;
-    const position = this.scrollDirection
-      ? this.options[index].endTopPosition
-      : this.options[index].endBottomPosition;
-    const level =
-      this.#frame -
-      Math.ceil(
-        ((position - this.scrollBottomPosition) /
-          (this.options[index].size - this.windowSize)) *
-          this.#frame
-      );
-    const step = this.#getStep(level);
-    const element = this.elements[index];
-    callback &&
-      callback({
-        status: this.options[index].doing,
-        index,
-        step,
-        element,
-      });
-    if (level < 0 || level > this.#frame) return true;
-  }
-  onEnding(index: number): true | void {
-    const callback = this.#callbacks[index] as Callback;
-    const position = this.scrollDirection
-      ? this.options[index].endTopPosition
-      : this.options[index].endBottomPosition;
-    const level =
-      this.#frame -
-      Math.ceil(
-        ((position - this.scrollTopPosition) / this.windowSize) * this.#frame
-      );
-    const step = this.#getStep(level);
+    const step = this.#getStep(level, frame);
     const element = this.elements[index];
     callback &&
       callback({
@@ -94,6 +55,45 @@ export default class UxScrollCallback extends Scroll {
         step,
         element,
       });
-    if (level < 0 || level > this.#frame) return true;
+  }
+  onStarting(index: number): true | void {
+    const frame = this.#frames[index];
+    const position = this.scrollDirection
+      ? this.options[index].startTopPosition
+      : this.options[index].startBottomPosition;
+    const level = Math.ceil(
+      ((this.scrollBottomPosition - position) / this.windowSize) * frame
+    );
+    this.#callback(index, level, frame);
+
+    if (level < 0 || level > frame) return true;
+  }
+  onDoing(index: number): true | void {
+    const frame = this.#frames[index];
+    const position = this.scrollDirection
+      ? this.options[index].endTopPosition
+      : this.options[index].endBottomPosition;
+    const level =
+      frame -
+      Math.ceil(
+        ((position - this.scrollBottomPosition) /
+          (this.options[index].size - this.windowSize)) *
+          frame
+      );
+    this.#callback(index, level, frame);
+    if (level < 0 || level > frame) return true;
+  }
+  onEnding(index: number): true | void {
+    const frame = this.#frames[index];
+    const position = this.scrollDirection
+      ? this.options[index].endTopPosition
+      : this.options[index].endBottomPosition;
+    const level =
+      frame -
+      Math.ceil(
+        ((position - this.scrollTopPosition) / this.windowSize) * frame
+      );
+    this.#callback(index, level, frame);
+    if (level < 0 || level > frame) return true;
   }
 }
