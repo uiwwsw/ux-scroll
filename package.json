@@ -12,7 +12,8 @@
   "author": "matthew <uiwwsw@icloud.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "npx webpack watch"
+    "dev": "npx webpack watch",
+    "publish": "npx webpack build && npm install && npm publish"
   },
   "devDependencies": {
     "typescript": "^4.5.2",
