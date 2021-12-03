@@ -27,14 +27,16 @@ body {
 .started .uiwwsw-demo__ux-scroll__content {
   position: fixed;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 img {
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 {
+  display: flex;
+}
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   transform-origin: top left;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 .text {
-  position: absolute;
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text {
   opacity: 0;
   top: 0;
   right: 0;

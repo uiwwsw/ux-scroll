@@ -29,7 +29,7 @@ const d = new UxScrollCallback({
       //   else element.classList.remove("started");
       // }
       if (status === "doing") {
-        const children = element.children[0];
+        const children = element.children[0].children[0];
         const img = children.children[0];
         if (step > 200) {
           const [p1, p2, p3, p4] = children.children[1].children;
@@ -59,12 +59,9 @@ const d = new UxScrollCallback({
           }
         }
         if (!img.classList.contains("done")) {
-          const scale = 1 - step / 300;
-          children.children[0].setAttribute(
-            "style",
-            `transform: scale(${scale});`
-          );
-          if (step > 200) {
+          const scale = 200 - step;
+          children.children[0].setAttribute("style", `width: ${scale}%;`);
+          if (300 > step && step > 200) {
             img.classList.add("done");
             children.children[1].setAttribute("style", `opacity: 1`);
             children.children[0].setAttribute(
