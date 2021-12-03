@@ -1,6 +1,6 @@
 {
-  "name": "ux-scroll",
-  "version": "0.1.13",
+  "name": "@uiwwsw/ux-scroll",
+  "version": "0.1.14",
   "main": "dist/index.js",
   "keywords": [
     "apple",
@@ -9,7 +9,7 @@
     "library"
   ],
   "repository": "https://uiwwsw@github.com/uiwwsw/ux-scroll.git",
-  "author": "matthew <uiwwsw@icloud.com>",
+  "author": "uiwwsw",
   "license": "MIT",
   "scripts": {
     "dev": "npx webpack watch",
