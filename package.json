@@ -1,5 +1,5 @@
 {
-  "name": "@uiwwsw/ux-scroll",
+  "name": "ux-scroll",
   "version": "0.1.11",
   "main": "dist/index.js",
   "keywords": [
