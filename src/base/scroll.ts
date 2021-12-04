@@ -11,7 +11,6 @@ export interface Option<T> {
   starting?: T;
   doing?: T;
   ending?: T;
-  frame?: number;
 }
 export interface InputOption extends Option<string> {
   startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
@@ -121,7 +120,6 @@ export default class Scroll {
   }) {
     !options && (options = {});
     !commonOptions && (commonOptions = {});
-
     return this.elements.map((x, index) => {
       const startPosition =
         this.#direction === Direction.Y ? x.offsetTop : x.offsetLeft;
@@ -140,19 +138,15 @@ export default class Scroll {
       const endBottomMargin = this.#getMargin(
         commonOptions?.endBottomMargin || options[index]?.endBottomMargin
       );
+      const others = Object.assign(commonOptions, options[index]);
       return {
         index,
         size,
-        // startPosition: startPosition,
-        // endPosition: endPosition,
+        ...others,
         startTopPosition: startPosition + startTopMargin,
         endTopPosition: endPosition + endTopMargin,
         startBottomPosition: startPosition + startBottomMargin,
         endBottomPosition: endPosition + endBottomMargin,
-        starting: commonOptions?.starting || options[index]?.starting || null,
-        doing: commonOptions?.doing || options[index]?.doing || null,
-        ending: commonOptions?.ending || options[index]?.ending || null,
-        frame: commonOptions?.frame || options[index]?.frame || null,
       };
     });
   }

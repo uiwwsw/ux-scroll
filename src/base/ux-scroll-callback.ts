@@ -1,9 +1,18 @@
-import Scroll, { IndexOption, InputOption, Props } from "./scroll";
+import Scroll, {
+  IndexOption,
+  InputOption,
+  OutputOption,
+  Props,
+} from "./scroll";
 export interface InputOptionForCallback extends InputOption {
-  startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
-  endTopMargin?: string; // ending 이벤트중 top=>down 시 마진
-  startBottomMargin?: string; // starting 이벤트중 down=>top 시 마진
-  endBottomMargin?: string; // ending 이벤트중 down=>top 시 마진
+  startingFrame?: number;
+  doingFrame?: number;
+  endingFrame?: number;
+}
+export interface OutputOptionForCallback extends OutputOption {
+  startingFrame: number;
+  doingFrame: number;
+  endingFrame: number;
 }
 export interface PropsExtends extends Props {
   callbacks: IndexOption<Function>;
@@ -20,6 +29,7 @@ export interface CallbackProps {
 export type Callback = (props: CallbackProps) => true | void;
 export default class UxScrollCallback extends Scroll {
   readonly #callbacks: IndexOption<Function>;
+  protected options: OutputOptionForCallback[];
   constructor(props: PropsExtends) {
     super({
       ...props,
@@ -27,7 +37,9 @@ export default class UxScrollCallback extends Scroll {
         starting: "starting",
         doing: "doing",
         ending: "ending",
-        frame: 1000,
+        startingFrame: 1000,
+        doingFrame: 1000,
+        endingFrame: 1000,
         ...props.commonOptions,
       },
     });
@@ -64,7 +76,7 @@ export default class UxScrollCallback extends Scroll {
       });
   }
   onStarting(index: number): true | void {
-    const frame = this.options[index].frame;
+    const frame = this.options[index].startingFrame;
     const status = this.options[index].starting;
 
     const position = this.scrollDirection
@@ -83,7 +95,7 @@ export default class UxScrollCallback extends Scroll {
     if (level < 0 || level > frame) return true;
   }
   onDoing(index: number): true | void {
-    const frame = this.options[index].frame;
+    const frame = this.options[index].doingFrame;
     const status = this.options[index].doing;
 
     const position = this.scrollDirection
@@ -105,7 +117,7 @@ export default class UxScrollCallback extends Scroll {
     if (level < 0 || level > frame) return true;
   }
   onEnding(index: number): true | void {
-    const frame = this.options[index].frame;
+    const frame = this.options[index].endingFrame;
     const status = this.options[index].ending;
 
     const position = this.scrollDirection

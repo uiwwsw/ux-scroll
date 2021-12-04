@@ -10,7 +10,6 @@ export interface Option<T> {
     starting?: T;
     doing?: T;
     ending?: T;
-    frame?: number;
 }
 export interface InputOption extends Option<string> {
     startTopMargin?: string;

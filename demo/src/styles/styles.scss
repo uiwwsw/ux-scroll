@@ -13,7 +13,21 @@ body {
   }
   &__ux-scroll {
     position: relative;
-    height: 500vh;
+    &--1 {
+      height: 1000px;
+    }
+    &--2 {
+      height: 2000px;
+    }
+    &--3 {
+      height: 3000px;
+    }
+    &--4 {
+      height: 4000px;
+    }
+    &--5 {
+      height: 5000px;
+    }
     &__content {
       position: absolute;
       top: 0;
@@ -22,20 +36,25 @@ body {
       .started & {
         position: fixed;
       }
+      .ended & {
+        bottom: 0;
+        top: auto;
+        position: absolute;
+      }
       &__item {
         &--1 {
           .item1 {
             display: flex;
+            height: 100vh;
             img {
               width: 100%;
               height: 100%;
               object-fit: contain;
-              transform-origin: top left;
+              transition: background 0.4s;
             }
             .text {
-              opacity: 0;
-              top: 0;
-              right: 0;
+              display: none;
+              align-self: center;
               font-size: 4vmax;
               transition: opacity 0.3s;
               max-width: calc(100vw - 330px);

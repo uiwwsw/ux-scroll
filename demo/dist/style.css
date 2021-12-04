@@ -16,7 +16,21 @@ body {
 }
 .uiwwsw-demo__ux-scroll {
   position: relative;
-  height: 500vh;
+}
+.uiwwsw-demo__ux-scroll--1 {
+  height: 1000px;
+}
+.uiwwsw-demo__ux-scroll--2 {
+  height: 2000px;
+}
+.uiwwsw-demo__ux-scroll--3 {
+  height: 3000px;
+}
+.uiwwsw-demo__ux-scroll--4 {
+  height: 4000px;
+}
+.uiwwsw-demo__ux-scroll--5 {
+  height: 5000px;
 }
 .uiwwsw-demo__ux-scroll__content {
   position: absolute;
@@ -27,19 +41,24 @@ body {
 .started .uiwwsw-demo__ux-scroll__content {
   position: fixed;
 }
+.ended .uiwwsw-demo__ux-scroll__content {
+  bottom: 0;
+  top: auto;
+  position: absolute;
+}
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 {
   display: flex;
+  height: 100vh;
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transform-origin: top left;
+  transition: background 0.4s;
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 .text {
-  opacity: 0;
-  top: 0;
-  right: 0;
+  display: none;
+  align-self: center;
   font-size: 4vmax;
   transition: opacity 0.3s;
   max-width: calc(100vw - 330px);
