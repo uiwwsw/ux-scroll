@@ -15,7 +15,7 @@ export interface OutputOptionForCallback extends OutputOption {
   endingFrame: number;
 }
 export interface PropsExtends extends Props {
-  callbacks: IndexOption<Function>;
+  callbacks: IndexOption<Callback>;
   commonOptions?: InputOptionForCallback;
   options?: IndexOption<InputOptionForCallback>;
 }
@@ -28,7 +28,7 @@ export interface CallbackProps {
 }
 export type Callback = (props: CallbackProps) => true | void;
 export default class UxScrollCallback extends Scroll {
-  readonly #callbacks: IndexOption<Function>;
+  readonly #callbacks: IndexOption<Callback>;
   protected options: OutputOptionForCallback[];
   constructor(props: PropsExtends) {
     super({
@@ -63,7 +63,7 @@ export default class UxScrollCallback extends Scroll {
     level: number;
     frame: number;
   }) {
-    const callback = this.#callbacks[index] as Callback;
+    const callback = this.#callbacks[index];
     const step = this.#getStep(level, frame);
     const element = this.elements[index];
     callback &&

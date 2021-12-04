@@ -10,7 +10,7 @@ export interface OutputOptionForCallback extends OutputOption {
     endingFrame: number;
 }
 export interface PropsExtends extends Props {
-    callbacks: IndexOption<Function>;
+    callbacks: IndexOption<Callback>;
     commonOptions?: InputOptionForCallback;
     options?: IndexOption<InputOptionForCallback>;
 }

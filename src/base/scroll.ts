@@ -126,19 +126,12 @@ export default class Scroll {
       const size =
         this.#direction === Direction.Y ? x.offsetHeight : x.offsetWidth;
       const endPosition = startPosition + size;
-      const startTopMargin = this.#getMargin(
-        commonOptions?.startTopMargin || options[index]?.startTopMargin
-      );
-      const endTopMargin = this.#getMargin(
-        commonOptions?.endTopMargin || options[index]?.endTopMargin
-      );
-      const startBottomMargin = this.#getMargin(
-        commonOptions?.startBottomMargin || options[index]?.startBottomMargin
-      );
-      const endBottomMargin = this.#getMargin(
-        commonOptions?.endBottomMargin || options[index]?.endBottomMargin
-      );
       const others = Object.assign(commonOptions, options[index]);
+
+      const startTopMargin = this.#getMargin(others.startTopMargin);
+      const endTopMargin = this.#getMargin(others.endTopMargin);
+      const startBottomMargin = this.#getMargin(others.startBottomMargin);
+      const endBottomMargin = this.#getMargin(others.endBottomMargin);
       return {
         index,
         size,
