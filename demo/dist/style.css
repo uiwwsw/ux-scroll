@@ -507,6 +507,7 @@ body {
 }
 .transition-demo__start {
   height: 100vh;
+  clear: both;
 }
 .transition-demo__transition {
   clear: both;
