@@ -5,6 +5,7 @@ export default class UxScrollTransition extends Scroll {
       ...props,
       commonOptions: {
         starting: "ux__transition--animated",
+        startTopMargin: ".2",
         startBottomMargin: "-1",
         ...props.commonOptions,
       },

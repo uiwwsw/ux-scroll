@@ -1,7 +1,7 @@
 import { UxScrollCallback, UxScrollTransition } from "../../src/base";
 
 const d = new UxScrollTransition({
-  selector: ".ux__transition",
+  selector: ".transition-demo__transition",
 });
 
 export default d;

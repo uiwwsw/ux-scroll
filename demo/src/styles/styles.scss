@@ -129,3 +129,23 @@ body {
     }
   }
 }
+
+.transition-demo {
+  padding: 10vw;
+  &__start {
+    height: 100vh;
+  }
+  &__transition {
+    clear: both;
+    height: 200px;
+    padding: 30px;
+    margin: 30px;
+    background: rgb(121, 121, 121);
+    &:nth-child(odd) {
+      float: left;
+    }
+    &:nth-child(even) {
+      float: right;
+    }
+  }
+}

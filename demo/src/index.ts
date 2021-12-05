@@ -135,9 +135,9 @@ import transition from "./transition";
 
 window.onscroll = () => {
   uiwwsw.onScroll();
-  // transition.onScroll();
+  transition.onScroll();
 };
 window.onresize = () => {
   uiwwsw.onResize();
-  // transition.onResize();
+  transition.onResize();
 };
