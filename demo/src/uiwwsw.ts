@@ -13,7 +13,7 @@ const d = new UxScrollCallback({
       endingFrame: 100,
     },
     2: {
-      doingFrame: 2000,
+      doingFrame: 20,
     },
   },
   callbacks: {
@@ -132,15 +132,11 @@ const d = new UxScrollCallback({
       step: number;
       element: HTMLElement;
     }) => {
-      //   const content = getContent(element);
-      //   const reverseStep = 2001 - step;
-      //   const reverseStep2 = (2000 - step) / 50;
-      //   if (status === "doing") {
-      //     content.setAttribute(
-      //       "style",
-      //       `transform:scale(${reverseStep}) translateY(-${reverseStep2}%)`
-      //     );
-      //   }
+      const content = getContent(element);
+      const reverseStep = 21 - step;
+      if (status === "doing") {
+        content.setAttribute("style", `transform:scale(${reverseStep})`);
+      }
     },
   },
 });
