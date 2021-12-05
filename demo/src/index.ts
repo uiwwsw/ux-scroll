@@ -1,6 +1,7 @@
 // import { UxScrollCallback, UxScrollTransition } from "ux-scroll";
 import "./styles/styles.scss";
 import uiwwsw from "./uiwwsw";
+import transition from "./transition";
 // const c = new UxScrollCallback({
 //   selector: ".ux__counting",
 //   callbacks: {
@@ -132,13 +133,11 @@ import uiwwsw from "./uiwwsw";
 //   },
 // });
 
-// const a = new UxScrollTransition({
-//   selector: ".ux__transition",
-// });
-
 window.onscroll = () => {
   uiwwsw.onScroll();
+  // transition.onScroll();
 };
 window.onresize = () => {
   uiwwsw.onResize();
+  // transition.onResize();
 };
