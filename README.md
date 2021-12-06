@@ -19,9 +19,13 @@ import {UxScrollCallback} from 'ux-scroll';
 const uxScrollCallback = new UxScrollCallback(options: Props)
 interface Props {
   selector: string; // css selector
-  options: {},
+  options: {
+    0: {
+      // default frame
+    }
+  },
   commonOption: {
-
+    frame: 1000// default frame
   },
   callbacks?: {
     0: ({
@@ -65,8 +69,12 @@ interface Props {
     //0: commonOptions 개별 엘리먼트 별 옵션 지정 가능
   };
 }
-window.onscroll = uxScrollTransition.onScroll();
-window.onresize = uxScrollTransition.onResize();
+window.onscroll = ()=>{
+  uxScrollTransition.onScroll()
+};
+window.onresize = ()=>{
+  uxScrollTransition.onResize()
+};
 ```
 
 ## 카운팅 에니메이션
