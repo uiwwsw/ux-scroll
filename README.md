@@ -14,18 +14,24 @@ yarn add ux-scroll
 
 ## 스크롤 에니메이션 UxScrollCallback
 
+[index demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/index.ts)
+
+[uiwwsw demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/uiwwsw.ts)
+
 ```typescript
 import {UxScrollCallback} from 'ux-scroll';
 const uxScrollCallback = new UxScrollCallback(options: Props)
 interface Props {
   selector: string; // css selector
-  options: {
-    0: {
-      // default frame
-    }
-  },
   commonOption: {
-    frame: 1000// default frame
+    startTopMargin?: string; // starting 이벤트중 top=>down 시 마진
+    endTopMargin?: string; // ending 이벤트중 top=>down 시 마진
+    startBottomMargin?: string; // starting 이벤트중 down=>top 시 마진
+    endBottomMargin?: string; // ending 이벤트중 down=>top 시 마진
+    frame?: number // 1000
+  },
+  options: {
+    // 0:{}
   },
   callbacks?: {
     0: ({
@@ -45,11 +51,17 @@ interface Props {
     }
   };
 }
-window.onscroll = uxScrollCallback.onScroll();
-window.onresize = uxScrollCallback.onResize();
+window.onscroll = () => {
+  uxScrollCallback.onScroll();
+}
+window.onresize = () => {
+  uxScrollCallback.onResize();
+}
 ```
 
 ## 간단한 트렌지션 UxScrollTransition
+
+[transition demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/transition.ts)
 
 ```typescript
 import {UxScrollTransition} from 'ux-scroll';
