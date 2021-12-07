@@ -1,11 +1,15 @@
 {
   "name": "ux-scroll",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "main": "dist/index.js",
   "keywords": [
+    "front-end",
     "apple",
     "scroll",
+    "scrolling",
     "animation",
+    "transition",
+    "plugin",
     "library"
   ],
   "repository": "https://uiwwsw@github.com/uiwwsw/ux-scroll.git",
