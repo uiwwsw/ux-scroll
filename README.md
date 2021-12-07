@@ -1,3 +1,8 @@
+[![ux-scroll github]](http://github.com/uiwwsw/ux-scroll)
+
+[![NPM version](https://img.shields.io/npm/v/ux-scroll.svg?style=flat)](https://npmjs.org/package/ux-scroll)
+[![NPM downloads](https://img.shields.io/npm/dm/ux-scroll.svg?style=flat)](https://npmjs.org/package/ux-scroll)
+
 # ux-scroll
 
 ## 스크롤 에니메이션 라이브러리
