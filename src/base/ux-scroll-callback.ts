@@ -37,9 +37,9 @@ export default class UxScrollCallback extends Scroll {
         starting: "starting",
         doing: "doing",
         ending: "ending",
-        startingFrame: 1000,
-        doingFrame: 1000,
-        endingFrame: 1000,
+        startingFrame: 999,
+        doingFrame: 999,
+        endingFrame: 999,
         ...props.commonOptions,
       },
     });
@@ -62,7 +62,7 @@ export default class UxScrollCallback extends Scroll {
     status: string;
     level: number;
     frame: number;
-  }) {
+  }): void | true {
     const callback = this.#callbacks[index];
     const step = this.#getStep(level, frame);
     const element = this.elements[index];
@@ -74,6 +74,7 @@ export default class UxScrollCallback extends Scroll {
         step,
         element,
       });
+    if (level < 0 || level > frame) return true;
   }
   onStarting(index: number): true | void {
     const frame = this.options[index].startingFrame;
@@ -85,14 +86,12 @@ export default class UxScrollCallback extends Scroll {
     const level = Math.ceil(
       ((this.scrollBottomPosition - position) / this.windowSize) * frame
     );
-    this.#callback({
+    return this.#callback({
       status,
       index,
       level,
       frame,
     });
-
-    if (level < 0 || level > frame) return true;
   }
   onDoing(index: number): true | void {
     const frame = this.options[index].doingFrame;
@@ -108,13 +107,12 @@ export default class UxScrollCallback extends Scroll {
           (this.options[index].size - this.windowSize)) *
           frame
       );
-    this.#callback({
+    return this.#callback({
       status,
       index,
       level,
       frame,
     });
-    if (level < 0 || level > frame) return true;
   }
   onEnding(index: number): true | void {
     const frame = this.options[index].endingFrame;
@@ -128,12 +126,11 @@ export default class UxScrollCallback extends Scroll {
       Math.ceil(
         ((position - this.scrollTopPosition) / this.windowSize) * frame
       );
-    this.#callback({
+    return this.#callback({
       status,
       index,
       level,
       frame,
     });
-    if (level < 0 || level > frame) return true;
   }
 }

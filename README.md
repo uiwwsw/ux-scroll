@@ -13,13 +13,13 @@
 
 ## How to setup
 
-```command
+```
 yarn add ux-scroll
 ```
 
 or
 
-```common
+```
 npm install -s ux-scroll
 ```
 
@@ -39,7 +39,7 @@ interface Props {
     endTopMargin?: string;
     startBottomMargin?: string;
     endBottomMargin?: string;
-    frame?: number; //default: 1000
+    frame?: number; //default: 999
   },
   options: {
     // 0:{
@@ -55,7 +55,7 @@ interface Props {
         } : {
             status: string; // 'starting' || 'doing' || 'ending'
             index: number;
-            step: number;// 0 ~ 1000(frame)
+            step: number;// 0 ~ 999(frame)
             element: HTMLElement;
         })=>{
         // do something

@@ -467,8 +467,8 @@ body {
   align-self: center;
   font-size: 4vmax;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text span,
-.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text p {
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text > span,
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text > p {
   opacity: 0.3;
   font-weight: normal;
 }
@@ -498,7 +498,7 @@ body {
   margin: auto;
   transition: transform 0.1s;
   transform-origin: center center;
-  transform: scale(21);
+  transform: matrix(21, 0, 0, 21, 0, 0);
   color: #363638;
 }
 

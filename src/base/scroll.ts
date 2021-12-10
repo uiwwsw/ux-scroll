@@ -52,13 +52,9 @@ export default class Scroll {
 
   constructor(props: Props) {
     this.#props = props;
-    this.elements = this.#getElements(this.#props.selector);
+    this.elements = this.#getElements();
+    this.#status = this.#getStatus();
     this.#onResize();
-    this.#status = this.elements.map(() => ({
-      starting: true,
-      doing: true,
-      ending: true,
-    }));
     this.onResize = this.#setThrottle(this.#onResize, this.#throttleTimer);
     this.onScroll = this.#setThrottle(this.#onScroll, this.#throttleTimer);
   }
@@ -150,8 +146,17 @@ export default class Scroll {
       return (Number(margin.replace("%", "")) * this.windowSize) / 100;
     return Number(margin) * this.windowSize;
   }
-  #getElements(selector: string) {
-    return Array.prototype.slice.call(document.querySelectorAll(selector));
+  #getElements() {
+    return Array.prototype.slice.call(
+      document.querySelectorAll(this.#props.selector)
+    );
+  }
+  #getStatus() {
+    return this.elements.map(() => ({
+      starting: true,
+      doing: true,
+      ending: true,
+    }));
   }
 
   #getWindowSize() {
@@ -186,6 +191,7 @@ export default class Scroll {
     });
     this.#getDoingOptions.map(({ index }) => {
       const res = this.onDoing(index);
+      console.log(res, "res");
       if (res) this.#status[index].doing = false;
     });
     this.#getEndingOptions.map(({ index }) => {

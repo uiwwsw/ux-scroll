@@ -17,7 +17,6 @@ const d = new UxScrollCallback({
       step: number;
       element: HTMLElement;
     }) => {
-      console.log(status);
       element.setAttribute(status, step.toString());
     },
     1: ({

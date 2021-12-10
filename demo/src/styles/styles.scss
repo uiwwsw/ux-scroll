@@ -74,8 +74,8 @@ body {
               margin: auto;
               align-self: center;
               font-size: 4vmax;
-              span,
-              p {
+              > span,
+              > p {
                 opacity: 0.3;
                 font-weight: normal;
               }
@@ -121,7 +121,7 @@ body {
             margin: auto;
             transition: transform 0.1s;
             transform-origin: center center;
-            transform: scale(21);
+            transform: matrix(21, 0, 0, 21, 0, 0);
             color: #363638;
           }
         }

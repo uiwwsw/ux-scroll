@@ -6,7 +6,7 @@ const d = new UxScrollCallback({
   selector: ".uiwwsw-demo__ux-scroll",
   options: {
     0: {
-      doingFrame: 200,
+      doingFrame: 17,
     },
     1: {
       doingFrame: 200,
@@ -31,42 +31,65 @@ const d = new UxScrollCallback({
       element: HTMLElement;
     }) => {
       const content = getContent(element);
-      if (status === "doing") {
-        if (step < 10) content.setAttribute("data-text", "d");
-        else if (step > 11 && step < 20)
-          content.setAttribute("data-text", "de");
-        else if (step > 21 && step < 30)
-          content.setAttribute("data-text", "dev");
-        else if (step > 31 && step < 40)
-          content.setAttribute("data-text", "deve");
-        else if (step > 41 && step < 50)
-          content.setAttribute("data-text", "devel");
-        else if (step > 51 && step < 60)
-          content.setAttribute("data-text", "develo");
-        else if (step > 61 && step < 70)
-          content.setAttribute("data-text", "develop");
-        else if (step > 71 && step < 80)
-          content.setAttribute("data-text", "develope");
-        else if (step > 81 && step < 90)
-          content.setAttribute("data-text", "developer");
-        else if (step > 91 && step < 100)
-          content.setAttribute("data-text", "develope");
-        else if (step > 101 && step < 110)
-          content.setAttribute("data-text", "develop");
-        else if (step > 111 && step < 120)
-          content.setAttribute("data-text", "develo");
-        else if (step > 121 && step < 130)
-          content.setAttribute("data-text", "uevelo");
-        else if (step > 131 && step < 140)
-          content.setAttribute("data-text", "uewelo");
-        else if (step > 141 && step < 150)
-          content.setAttribute("data-text", "ueweso");
-        else if (step > 151 && step < 160)
-          content.setAttribute("data-text", "uewesw");
-        else if (step > 161 && step < 170)
-          content.setAttribute("data-text", "uewwsw");
-        else if (step > 171 && step < 180)
-          content.setAttribute("data-text", "uiwwsw");
+      switch (status) {
+        case "doing":
+          switch (step) {
+            case 1:
+              content.textContent = "de";
+              break;
+            case 2:
+              content.textContent = "dev";
+              break;
+            case 3:
+              content.textContent = "deve";
+              break;
+            case 4:
+              content.textContent = "devel";
+              break;
+            case 5:
+              content.textContent = "develo";
+              break;
+            case 6:
+              content.textContent = "develop";
+              break;
+            case 7:
+              content.textContent = "develope";
+              break;
+            case 8:
+              content.textContent = "developer";
+              break;
+            case 9:
+              content.textContent = "develope";
+              break;
+            case 10:
+              content.textContent = "develop";
+              break;
+            case 11:
+              content.textContent = "develo";
+              break;
+            case 12:
+              content.textContent = "uevelo";
+              break;
+            case 13:
+              content.textContent = "uewelo";
+              break;
+            case 14:
+              content.textContent = "ueweso";
+              break;
+            case 15:
+              content.textContent = "uewesw";
+              break;
+            case 16:
+              content.textContent = "uewwsw";
+              break;
+            case 17:
+              content.textContent = "uiwwsw";
+              break;
+            default:
+              content.textContent = "d";
+              break;
+          }
+          break;
       }
     },
     1: ({
@@ -85,38 +108,11 @@ const d = new UxScrollCallback({
       const content = getContent(element);
       const img = content.children[0] as HTMLImageElement;
       const text = content.children[1] as HTMLElement;
-
-      if (status === "starting") {
-      }
-      if (status === "doing") {
-        if (!img.classList.contains("done")) {
-          const reverseStep = 100 - step;
-          img.dataset.width = reverseStep.toString();
-          text.dataset.width = step.toString();
-          if (step > 70) {
-            img.classList.add("done");
-            img.dataset.width = "30";
-            text.dataset.width = "70";
-          }
-        } else {
-          if (step < 70) {
-            img.classList.remove("done");
-          }
-        }
-        if (step < 149 && step > 125) {
-          text.dataset.value = "1";
-        }
-        if (step < 174 && step > 150) {
-          text.dataset.value = "2";
-        }
-        if (step < 199 && step > 175) {
-          text.dataset.value = "3";
-        }
-      }
-      if (status === "ending") {
-        if (step > 10) {
-          text.dataset.value = "4";
-        }
+      switch (status) {
+        case "starting":
+          break;
+        case "doing":
+          break;
       }
     },
     2: ({
@@ -135,7 +131,10 @@ const d = new UxScrollCallback({
       const content = getContent(element);
       const reverseStep = 21 - step;
       if (status === "doing") {
-        content.setAttribute("style", `transform:scale(${reverseStep})`);
+        content.setAttribute(
+          "style",
+          `transform:matrix(${reverseStep},0,0,${reverseStep},0,0)`
+        );
       }
     },
   },
