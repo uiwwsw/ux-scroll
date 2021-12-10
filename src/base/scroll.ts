@@ -191,7 +191,6 @@ export default class Scroll {
     });
     this.#getDoingOptions.map(({ index }) => {
       const res = this.onDoing(index);
-      console.log(res, "res");
       if (res) this.#status[index].doing = false;
     });
     this.#getEndingOptions.map(({ index }) => {
