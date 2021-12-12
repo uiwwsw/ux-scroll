@@ -445,46 +445,56 @@ body {
   content: attr(data-text);
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 {
-  display: flex;
+  position: relative;
   height: 100vh;
   transform: translate3d(0, 0, 0);
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 .img-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
   background: #363638;
+  will-change: transform;
+  transform-origin: left top;
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transition: width 0.1s;
-  transform-origin: left;
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 .text {
-  overflow: hidden;
-  width: 0;
-  margin: auto;
+  opacity: 0;
   align-self: center;
-  font-size: 4vmax;
+  transition: opacity 1s;
+  font-size: 6vmin;
+}
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text img {
+  opacity: 0;
+  float: left;
+  width: 50%;
+  height: 50vh;
+  padding: 0 12px 12px 0;
 }
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 .text > span,
 .uiwwsw-demo__ux-scroll__content__item--1 .item1 .text > p {
   opacity: 0.3;
   font-weight: normal;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text[data-value="1"] span:nth-child(1) {
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text.text1 span:nth-child(2) {
   opacity: 1;
   font-weight: bold;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text[data-value="2"] span:nth-child(2) {
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text.text2 span:nth-child(3) {
   opacity: 1;
   font-weight: bold;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text[data-value="3"] span:nth-child(3) {
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text.text3 span:nth-child(4) {
   opacity: 1;
   font-weight: bold;
 }
-.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text[data-value="4"] p {
+.uiwwsw-demo__ux-scroll__content__item--1 .item1 .text.text4 p {
   opacity: 1;
   font-weight: bold;
 }

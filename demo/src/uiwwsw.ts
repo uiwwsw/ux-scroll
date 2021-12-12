@@ -9,7 +9,7 @@ const d = new UxScrollCallback({
       doingFrame: 17,
     },
     1: {
-      doingFrame: 200,
+      doingFrame: 89,
       endingFrame: 100,
     },
     2: {
@@ -106,12 +106,28 @@ const d = new UxScrollCallback({
       element: HTMLElement;
     }) => {
       const content = getContent(element);
-      const img = content.children[0] as HTMLImageElement;
-      const text = content.children[1] as HTMLElement;
+      const imgEl = content.children[0] as HTMLImageElement;
+      const textEl = content.children[1] as HTMLElement;
       switch (status) {
         case "starting":
           break;
         case "doing":
+          const reverseStep = (100 - step) / 100;
+          if (step < 50) {
+            imgEl.setAttribute(
+              "style",
+              `transform:matrix(${reverseStep},0,0,${reverseStep},0,0)`
+            );
+            textEl.setAttribute("style", `opacity: 0`);
+          } else {
+            textEl.setAttribute("style", `opacity: 1`);
+            imgEl.setAttribute("style", `transform:matrix(.5,0,0,.5,0,0)`);
+            if (step > 50 && step < 60) textEl.className = "text text1";
+            if (step > 60 && step < 70) textEl.className = "text text2";
+            if (step > 70 && step < 80) textEl.className = "text text3";
+            if (step > 80 && step < 90) textEl.className = "text text4";
+          }
+
           break;
       }
     },
