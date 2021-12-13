@@ -89,13 +89,13 @@ export default class UxScrollCallback extends Scroll {
     this.#callbacks = props.callbacks;
   }
   #getStep(level: number, frame: number, easing: string) {
-    const acc = easingsFunctions[easing];
-    let step = Math.ceil(acc(level) * frame);
-    if (step > frame) step = frame;
-    if (step < 0) step = 0;
-    return step;
     // const acc = easingsFunctions[easing];
-    // return Math.ceil(acc(level) * frame);
+    // let step = Math.ceil(acc(level) * frame);
+    // if (step > frame) step = frame;
+    // if (step < 0) step = 0;
+    // return step;
+    const acc = easingsFunctions[easing];
+    return Math.ceil(acc(level) * frame);
   }
 
   #callback({
