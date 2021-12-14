@@ -30,7 +30,7 @@ npm install -s ux-scroll
 [uiwwsw demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/uiwwsw.ts)
 
 ```typescript
-import {UxScrollCallback} from 'ux-scroll';
+import {UxScrollCallback, TEasingName} from 'ux-scroll';
 const uxScrollCallback = new UxScrollCallback(options: Props)
 interface Props {
   selector: string; // css selector
@@ -39,7 +39,12 @@ interface Props {
     endTopMargin?: string;
     startBottomMargin?: string;
     endBottomMargin?: string;
-    frame?: number; //default: 999
+    startingFrame?: number; //default: 999
+    doingFrame?: number; //default: 999
+    endingFrame?: number; //default: 999
+    startingEasing?: TEasingName; //default: 'inCubic'
+    doingEasing?: TEasingName; //default: 'inCubic'
+    endingEasing?: TEasingName; //default: 'inCubic'
   },
   options: {
     // 0:{

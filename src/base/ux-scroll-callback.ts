@@ -5,7 +5,6 @@ import Scroll, {
   Props,
 } from "./scroll";
 import easingsFunctions, { TEasingName } from "../utils/easing";
-
 export interface InputOptionForCallback extends InputOption {
   startingFrame?: number;
   doingFrame?: number;
