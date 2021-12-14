@@ -1,6 +1,6 @@
 {
   "name": "ux-scroll",
-  "version": "0.1.33",
+  "version": "0.2.0",
   "main": "dist/index.js",
   "keywords": [
     "front-end",
