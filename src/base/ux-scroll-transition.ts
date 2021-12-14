@@ -1,6 +1,6 @@
-import Scroll, { Props } from "./scroll";
-export default class UxScrollTransition extends Scroll {
-  constructor(props: Props) {
+import Scroll, { InputOption, Props } from "./scroll";
+export default class UxScrollTransition extends Scroll<InputOption> {
+  constructor(props: Props<InputOption>) {
     super({
       ...props,
       commonOptions: {
