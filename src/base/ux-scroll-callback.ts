@@ -4,55 +4,23 @@ import Scroll, {
   OutputOption,
   Props,
 } from "./scroll";
-import easingsFunctions from "../utils/functions";
-export type EasingName =
-  | "linear"
-  | "easeInQuad"
-  | "easeOutQuad"
-  | "easeInOutQuad"
-  | "easeInCubic"
-  | "easeOutCubic"
-  | "easeInOutCubic"
-  | "easeInQuart"
-  | "easeOutQuart"
-  | "easeInOutQuart"
-  | "easeInQuint"
-  | "easeOutQuint"
-  | "easeInOutQuint"
-  | "easeInSine"
-  | "easeOutSine"
-  | "easeInOutSine"
-  | "easeInExpo"
-  | "easeOutExpo"
-  | "easeInOutExpo"
-  | "easeInCirc"
-  | "easeOutCirc"
-  | "easeInOutCirc"
-  | "easeInBack"
-  | "easeOutBack"
-  | "easeInOutBack"
-  | "easeInElastic"
-  | "easeOutElastic"
-  | "easeInOutElastic"
-  | "easeInBounce"
-  | "easeOutBounce"
-  | "easeInOutBounce";
+import easingsFunctions, { TEasingName } from "../utils/easing";
 
 export interface InputOptionForCallback extends InputOption {
   startingFrame?: number;
   doingFrame?: number;
   endingFrame?: number;
-  startingEasing?: EasingName;
-  doingEasing?: EasingName;
-  endingEasing?: EasingName;
+  startingEasing?: TEasingName;
+  doingEasing?: TEasingName;
+  endingEasing?: TEasingName;
 }
 export interface OutputOptionForCallback extends OutputOption {
   startingFrame: number;
   doingFrame: number;
   endingFrame: number;
-  startingEasing: EasingName;
-  doingEasing: EasingName;
-  endingEasing: EasingName;
+  startingEasing: TEasingName;
+  doingEasing: TEasingName;
+  endingEasing: TEasingName;
 }
 export interface PropsExtends extends Props<InputOptionForCallback> {
   callbacks: IndexOption<Callback>;
@@ -78,15 +46,15 @@ export default class UxScrollCallback extends Scroll<InputOptionForCallback> {
         startingFrame: 999,
         doingFrame: 999,
         endingFrame: 999,
-        startingEasing: "easeInSine",
-        doingEasing: "easeInSine",
-        endingEasing: "easeInSine",
+        startingEasing: "inCubic",
+        doingEasing: "inCubic",
+        endingEasing: "inCubic",
         ...props.commonOptions,
       },
     });
     this.#callbacks = props.callbacks;
   }
-  #getStep(level: number, frame: number, easing: string) {
+  #getStep(level: number, frame: number, easing: TEasingName) {
     if (level > 1) level = 1;
     if (level < 0) level = 0;
     const acc = easingsFunctions[easing];
@@ -104,7 +72,7 @@ export default class UxScrollCallback extends Scroll<InputOptionForCallback> {
     status: string;
     level: number;
     frame: number;
-    easing: string;
+    easing: TEasingName;
   }): void | true {
     const callback = this.#callbacks[index];
     const step = this.#getStep(level, frame, easing);

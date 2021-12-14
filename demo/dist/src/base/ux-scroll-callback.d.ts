@@ -1,20 +1,20 @@
 import Scroll, { IndexOption, InputOption, OutputOption, Props } from "./scroll";
-export declare type EasingName = "linear" | "easeInQuad" | "easeOutQuad" | "easeInOutQuad" | "easeInCubic" | "easeOutCubic" | "easeInOutCubic" | "easeInQuart" | "easeOutQuart" | "easeInOutQuart" | "easeInQuint" | "easeOutQuint" | "easeInOutQuint" | "easeInSine" | "easeOutSine" | "easeInOutSine" | "easeInExpo" | "easeOutExpo" | "easeInOutExpo" | "easeInCirc" | "easeOutCirc" | "easeInOutCirc" | "easeInBack" | "easeOutBack" | "easeInOutBack" | "easeInElastic" | "easeOutElastic" | "easeInOutElastic" | "easeInBounce" | "easeOutBounce" | "easeInOutBounce";
+import { TEasingName } from "../utils/easing";
 export interface InputOptionForCallback extends InputOption {
     startingFrame?: number;
     doingFrame?: number;
     endingFrame?: number;
-    startingEasing?: EasingName;
-    doingEasing?: EasingName;
-    endingEasing?: EasingName;
+    startingEasing?: TEasingName;
+    doingEasing?: TEasingName;
+    endingEasing?: TEasingName;
 }
 export interface OutputOptionForCallback extends OutputOption {
     startingFrame: number;
     doingFrame: number;
     endingFrame: number;
-    startingEasing: EasingName;
-    doingEasing: EasingName;
-    endingEasing: EasingName;
+    startingEasing: TEasingName;
+    doingEasing: TEasingName;
+    endingEasing: TEasingName;
 }
 export interface PropsExtends extends Props<InputOptionForCallback> {
     callbacks: IndexOption<Callback>;

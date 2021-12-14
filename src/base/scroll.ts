@@ -35,8 +35,8 @@ export interface Props<T> {
   commonOptions?: T;
   options?: IndexOption<T>;
 }
-export default class Scroll<K> {
-  readonly #props: Props<K>;
+export default class Scroll<T> {
+  readonly #props: Props<T>;
   readonly #direction = Direction.Y;
   readonly #status: Option<boolean>[];
 
@@ -50,7 +50,7 @@ export default class Scroll<K> {
   readonly onResize: Function;
   readonly onScroll: Function;
 
-  constructor(props: Props<K>) {
+  constructor(props: Props<T>) {
     this.#props = props;
     this.elements = this.#getElements();
     this.#status = this.#getStatus();

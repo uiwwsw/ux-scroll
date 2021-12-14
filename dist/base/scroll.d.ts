@@ -34,7 +34,7 @@ export interface Props<T> {
     commonOptions?: T;
     options?: IndexOption<T>;
 }
-export default class Scroll<K> {
+export default class Scroll<T> {
     #private;
     protected readonly elements: HTMLElement[];
     protected options: OutputOption[];
@@ -44,7 +44,7 @@ export default class Scroll<K> {
     protected scrollDirection: 0 | 1;
     readonly onResize: Function;
     readonly onScroll: Function;
-    constructor(props: Props<K>);
+    constructor(props: Props<T>);
     get scrollBottomPosition(): number;
     get scrollTopPosition(): number;
     onStarting(index: number): true | void;
