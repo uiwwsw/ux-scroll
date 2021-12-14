@@ -29,14 +29,14 @@ export interface OutputOption extends Option<string> {
 export interface IndexOption<T> {
   [T: number]: T;
 }
-export interface Props {
+export interface Props<T> {
   selector: string;
   throttleTimer?: number;
-  commonOptions?: InputOption;
-  options?: IndexOption<InputOption>;
+  commonOptions?: T;
+  options?: IndexOption<T>;
 }
-export default class Scroll {
-  readonly #props: Props;
+export default class Scroll<K> {
+  readonly #props: Props<K>;
   readonly #direction = Direction.Y;
   readonly #status: Option<boolean>[];
 
@@ -50,7 +50,7 @@ export default class Scroll {
   readonly onResize: Function;
   readonly onScroll: Function;
 
-  constructor(props: Props) {
+  constructor(props: Props<K>) {
     this.#props = props;
     this.elements = this.#getElements();
     this.#status = this.#getStatus();

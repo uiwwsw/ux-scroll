@@ -54,10 +54,8 @@ export interface OutputOptionForCallback extends OutputOption {
   doingEasing: EasingName;
   endingEasing: EasingName;
 }
-export interface PropsExtends extends Props {
+export interface PropsExtends extends Props<InputOptionForCallback> {
   callbacks: IndexOption<Callback>;
-  commonOptions?: InputOptionForCallback;
-  options?: IndexOption<InputOptionForCallback>;
 }
 export interface CallbackProps {
   scrollDirection: 0 | 1;
@@ -67,7 +65,7 @@ export interface CallbackProps {
   element: HTMLElement;
 }
 export type Callback = (props: CallbackProps) => true | void;
-export default class UxScrollCallback extends Scroll {
+export default class UxScrollCallback extends Scroll<InputOptionForCallback> {
   readonly #callbacks: IndexOption<Callback>;
   protected options: OutputOptionForCallback[];
   constructor(props: PropsExtends) {
@@ -89,11 +87,8 @@ export default class UxScrollCallback extends Scroll {
     this.#callbacks = props.callbacks;
   }
   #getStep(level: number, frame: number, easing: string) {
-    // const acc = easingsFunctions[easing];
-    // let step = Math.ceil(acc(level) * frame);
-    // if (step > frame) step = frame;
-    // if (step < 0) step = 0;
-    // return step;
+    if (level > 1) level = 1;
+    if (level < 0) level = 0;
     const acc = easingsFunctions[easing];
     return Math.ceil(acc(level) * frame);
   }
