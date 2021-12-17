@@ -34,24 +34,7 @@ import {UxScrollCallback, TEasingName} from 'ux-scroll';
 const uxScrollCallback = new UxScrollCallback(options: Props)
 interface Props {
   selector: string; // css selector
-  commonOption: {
-    startTopMargin?: string;
-    endTopMargin?: string;
-    startBottomMargin?: string;
-    endBottomMargin?: string;
-    startingFrame?: number; //default: 999
-    doingFrame?: number; //default: 999
-    endingFrame?: number; //default: 999
-    startingEasing?: TEasingName; //default: 'inCubic'
-    doingEasing?: TEasingName; //default: 'inCubic'
-    endingEasing?: TEasingName; //default: 'inCubic'
-  },
-  options: {
-    // 0:{
-      // commonOptions
-    }
-  },
-  callbacks?: {
+  callbacks: {
     0: ({
             status,
             index,
@@ -66,6 +49,23 @@ interface Props {
         // do something
     }
   };
+  commonOption?: {
+    startTopMargin?: string;
+    endTopMargin?: string;
+    startBottomMargin?: string;
+    endBottomMargin?: string;
+    startingFrame?: number; //default: 999
+    doingFrame?: number; //default: 999
+    endingFrame?: number; //default: 999
+    startingEasing?: TEasingName; //default: 'inCubic'
+    doingEasing?: TEasingName; //default: 'inCubic'
+    endingEasing?: TEasingName; //default: 'inCubic'
+  },
+  options?: {
+    // 0:{
+      // commonOptions
+    }
+  }
 }
 window.onscroll = () => {
   uxScrollCallback.onScroll();
