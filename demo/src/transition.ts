@@ -1,4 +1,4 @@
-import { UxScrollCallback, UxScrollTransition } from "../../src/base";
+import { UxScrollCallback, UxScrollTransition } from "../../dist/index.js";
 
 const d = new UxScrollTransition({
   selector: ".transition-demo__transition",

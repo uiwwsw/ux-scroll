@@ -498,13 +498,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/plugin-syntax-typescript@^7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.16.0.tgz#2feeb13d9334cc582ea9111d3506f773174179bb"
-  integrity sha512-Xv6mEXqVdaqCBfJFyeab0fH2DnUoMsDmhamxsSi4j8nLd4Vtw213WMJr55xxqipC/YVWyPY3K0blJncPYji+dQ==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.14.5"
-
 "@babel/plugin-transform-arrow-functions@^7.16.0":
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.16.0.tgz#951706f8b449c834ed07bd474c0924c944b95a8e"
@@ -738,15 +731,6 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/plugin-transform-typescript@^7.16.0":
-  version "7.16.1"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-typescript/-/plugin-transform-typescript-7.16.1.tgz#cc0670b2822b0338355bc1b3d2246a42b8166409"
-  integrity sha512-NO4XoryBng06jjw/qWEU2LhcLJr1tWkhpMam/H4eas/CDKMX/b2/Ylb6EI256Y7+FVPCawwSM1rrJNOpDiz+Lg==
-  dependencies:
-    "@babel/helper-create-class-features-plugin" "^7.16.0"
-    "@babel/helper-plugin-utils" "^7.14.5"
-    "@babel/plugin-syntax-typescript" "^7.16.0"
-
 "@babel/plugin-transform-unicode-escapes@^7.16.0":
   version "7.16.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-unicode-escapes/-/plugin-transform-unicode-escapes-7.16.0.tgz#1a354064b4c45663a32334f46fa0cf6100b5b1f3"
@@ -852,15 +836,6 @@
     "@babel/plugin-transform-dotall-regex" "^7.4.4"
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
-
-"@babel/preset-typescript@^7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.16.0.tgz#b0b4f105b855fb3d631ec036cdc9d1ffd1fa5eac"
-  integrity sha512-txegdrZYgO9DlPbv+9QOVpMnKbOtezsLHWsnsRF4AjbSIsVaujrq1qg8HK0mxQpWv0jnejt0yEoW1uWpvbrDTg==
-  dependencies:
-    "@babel/helper-plugin-utils" "^7.14.5"
-    "@babel/helper-validator-option" "^7.14.5"
-    "@babel/plugin-transform-typescript" "^7.16.0"
 
 "@babel/runtime@^7.8.4":
   version "7.16.3"
@@ -2313,20 +2288,10 @@ util-deprecate@^1.0.2:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
 
-ux-scroll@^0.1.20:
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/ux-scroll/-/ux-scroll-0.1.20.tgz#81eb84c851f6d819463734fea8c538786810b651"
-  integrity sha512-j/tfpiAVbR+kYZvqfQy7Geo04InHqbTRAbW2cL8qcMcQ+1t7UxVqQIcuCu65Uz2m79aNqrMMMQ6+se5LFdBpyw==
-  dependencies:
-    "@babel/core" "^7.16.0"
-    "@babel/preset-env" "^7.16.4"
-    "@babel/preset-typescript" "^7.16.0"
-    babel-loader "^8.2.3"
-    css-loader "^6.5.1"
-    mini-css-extract-plugin "^2.4.5"
-    sass "^1.43.5"
-    sass-loader "^12.3.0"
-    ts-loader "^9.2.6"
+ux-scroll@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/ux-scroll/-/ux-scroll-0.2.3.tgz#cc4d52b4b4aa526854e1bbb52ea07bd28bc0bb8c"
+  integrity sha512-KqPzd4+J6PUXXjeb2lyIiX6QxyqfosmwE3gr+xBryAAv/1JEUvozioC04NmiBRw0XGMH0AMy1RIz5Yd54vliLw==
 
 watchpack@^2.3.0:
   version "2.3.0"
