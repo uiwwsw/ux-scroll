@@ -45,9 +45,9 @@ export default class UxScrollCallback extends Scroll<InputOptionForCallback> {
         startingFrame: 999,
         doingFrame: 999,
         endingFrame: 999,
-        startingEasing: "inCubic",
-        doingEasing: "inCubic",
-        endingEasing: "inCubic",
+        startingEasing: TEasingName.inCubic,
+        doingEasing: TEasingName.inCubic,
+        endingEasing: TEasingName.inCubic,
         ...props.commonOptions,
       },
     });

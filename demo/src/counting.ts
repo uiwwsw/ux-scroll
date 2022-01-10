@@ -1,6 +1,15 @@
-import { UxScrollCallback, UxScrollTransition } from "../../src/base";
+import {
+  UxScrollCallback,
+  UxScrollTransition,
+  TEasingName,
+} from "../../src/base";
 const d = new UxScrollCallback({
   selector: ".ux__counting",
+  commonOptions: {
+    startingEasing: TEasingName.linear,
+    doingEasing: TEasingName.linear,
+    endingEasing: TEasingName.linear,
+  },
   callbacks: {
     0: ({
       scrollDirection,

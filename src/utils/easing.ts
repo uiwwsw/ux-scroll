@@ -1,31 +1,32 @@
 //https://github.com/streamich/ts-easing/blob/master/src/index.ts
 export type TEasing = (time: number) => number;
-export type TEasingName =
-  | "linear"
-  | "quadratic"
-  | "cubic"
-  | "elastic"
-  | "inQuad"
-  | "outQuad"
-  | "inOutQuad"
-  | "inCubic"
-  | "outCubic"
-  | "inOutCubic"
-  | "inQuart"
-  | "outQuart"
-  | "inOutQuart"
-  | "inQuint"
-  | "outQuint"
-  | "inOutQuint"
-  | "inSine"
-  | "outSine"
-  | "inOutSine"
-  | "inExpo"
-  | "outExpo"
-  | "inOutExpo"
-  | "inCirc"
-  | "outCirc"
-  | "inOutCirc";
+export enum TEasingName {
+  linear = "linear",
+  quadratic = "quadratic",
+  cubic = "cubic",
+  elastic = "elastic",
+  inQuad = "inQuad",
+  outQuad = "outQuad",
+  inOutQuad = "inOutQuad",
+  inCubic = "inCubic",
+  outCubic = "outCubic",
+  inOutCubic = "inOutCubic",
+  inQuart = "inQuart",
+  outQuart = "outQuart",
+  inOutQuart = "inOutQuart",
+  inQuint = "inQuint",
+  outQuint = "outQuint",
+  inOutQuint = "inOutQuint",
+  inSine = "inSine",
+  outSine = "outSine",
+  inOutSine = "inOutSine",
+  inExpo = "inExpo",
+  outExpo = "outExpo",
+  inOutExpo = "inOutExpo",
+  inCirc = "inCirc",
+  outCirc = "outCirc",
+  inOutCirc = "inOutCirc",
+}
 export type TEasingMap = {
   [easing in TEasingName]: TEasing;
 };
