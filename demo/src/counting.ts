@@ -20,7 +20,7 @@ const d = new UxScrollCallback({
 
       const children = element.children;
       const numberElement = children[0].children;
-      const number = (step * Number(test.value)) / 1000;
+      const number = (step / 999) * Number(test.value);
       const c1 = Math.floor(number % 10).toString();
       const c2 = Math.floor((number / 10) % 10).toString();
       const c3 = Math.floor((number / 100) % 10).toString();

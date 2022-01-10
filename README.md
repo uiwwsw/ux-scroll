@@ -3,6 +3,12 @@
 
 # [ux-scroll](http://github.com/uiwwsw/ux-scroll)
 
+# [transition demo](https://codepen.io/uiwwsw/pen/OJxoKWQ)
+
+# [callback demo](https://codepen.io/uiwwsw/pen/yLzxddR)
+
+# [demo3](https://codepen.io/uiwwsw/pen/gOGmajd)
+
 ## scroll animation library
 
 #### You can make animation like apple
