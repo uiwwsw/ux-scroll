@@ -3,12 +3,6 @@
 
 # [ux-scroll](http://github.com/uiwwsw/ux-scroll)
 
-# [transition demo](https://codepen.io/uiwwsw/pen/OJxoKWQ)
-
-# [callback demo](https://codepen.io/uiwwsw/pen/yLzxddR)
-
-# [demo3](https://codepen.io/uiwwsw/pen/gOGmajd)
-
 ## scroll animation library
 
 #### You can make animation like apple
@@ -31,9 +25,9 @@ npm install -s ux-scroll
 
 ## UxScrollCallback
 
-[index demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/index.ts)
+[callback demo](https://codepen.io/uiwwsw/pen/yLzxddR)
 
-[uiwwsw demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/uiwwsw.ts)
+[demo3](https://codepen.io/uiwwsw/pen/gOGmajd)
 
 ```typescript
 import {UxScrollCallback, TEasingName} from 'ux-scroll';
@@ -83,7 +77,7 @@ window.onresize = () => {
 
 ## UxScrollTransition
 
-[transition demo](https://github.com/uiwwsw/ux-scroll/blob/master/demo/src/transition.ts)
+[transition demo](https://codepen.io/uiwwsw/pen/OJxoKWQ)
 
 ```typescript
 import {UxScrollTransition} from 'ux-scroll';
