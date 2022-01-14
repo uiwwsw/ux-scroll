@@ -36,7 +36,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [".ts"],
+    extensions: [".ts", ".tsx", ".js", ".jsx", "scss"],
   },
   plugins: [new MiniCssExtractPlugin({ filename: "./style.css" })],
   // output: {
