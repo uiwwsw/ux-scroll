@@ -3,7 +3,7 @@
 
 # [ux-scroll](http://github.com/uiwwsw/ux-scroll)
 
-[apple scroll animation demo](https://codepen.io/uiwwsw/pen/rNGqGgG)
+[apple scroll animation demo](https://codepen.io/uiwwsw/full/rNGqGgG)
 
 ## scroll animation library
 
@@ -27,9 +27,9 @@ npm install -s ux-scroll
 
 ## UxScrollCallback
 
-[callback demo](https://codepen.io/uiwwsw/pen/yLzxddR)
+[callback demo](https://codepen.io/uiwwsw/full/yLzxddR)
 
-[demo3](https://codepen.io/uiwwsw/pen/gOGmajd)
+[demo3](https://codepen.io/uiwwsw/full/gOGmajd)
 
 ```typescript
 import {UxScrollCallback, TEasingName} from 'ux-scroll';
@@ -79,7 +79,7 @@ window.onresize = () => {
 
 ## UxScrollTransition
 
-[transition demo](https://codepen.io/uiwwsw/pen/OJxoKWQ)
+[transition demo](https://codepen.io/uiwwsw/full/OJxoKWQ)
 
 ```typescript
 import {UxScrollTransition} from 'ux-scroll';
