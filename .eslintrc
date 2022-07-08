@@ -1,0 +1,17 @@
+{
+  "plugins": ["import", "@typescript-eslint"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["prettier", "plugin:import/typescript"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "rules": {
+    // turn on errors for missing imports
+    "import/no-unresolved": "error"
+  },
+  "settings": {}
+}

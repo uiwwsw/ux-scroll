@@ -1,12 +1,12 @@
-import Scroll, { InputOption, Props } from "./scroll";
+import Scroll, {InputOption, Props} from './scroll';
 export default class UxScrollTransition extends Scroll<InputOption> {
   constructor(props: Props<InputOption>) {
     super({
       ...props,
       commonOptions: {
-        starting: "ux__transition--animated",
-        startTopMargin: ".2",
-        startBottomMargin: "-1",
+        starting: 'ux__transition--animated',
+        startTopMargin: '.2',
+        startBottomMargin: '-1',
         ...props.commonOptions,
       },
     });

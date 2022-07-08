@@ -15,16 +15,32 @@
   "repository": "https://uiwwsw@github.com/uiwwsw/ux-scroll.git",
   "author": "uiwwsw",
   "license": "MIT",
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ]
+  },
   "scripts": {
     "dev": "npx webpack watch",
-    "build": "npx webpack build"
+    "build": "npx webpack build",
+    "husky": "husky install"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/parser": "^5.30.5",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.5.1",
+    "eslint": "^8.19.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "lint-staged": "^13.0.3",
     "mini-css-extract-plugin": "^2.4.5",
+    "prettier": "^2.7.1",
     "sass": "^1.45.2",
     "sass-loader": "^12.4.0",
     "ts-loader": "^9.2.6",

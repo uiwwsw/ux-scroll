@@ -1,11 +1,11 @@
 // import throttle from "../utils/throttle";
 export enum Direction {
-  Y = "y",
-  X = "x",
+  Y = 'y',
+  X = 'x',
 }
 export enum Size {
-  Y = "height",
-  X = "width",
+  Y = 'height',
+  X = 'width',
 }
 export interface Option<T> {
   starting?: T;
@@ -76,32 +76,32 @@ export default class Scroll<T> {
 
   get #getStartingOptions() {
     return this.options.filter(
-      ({ startTopPosition, startBottomPosition, index, starting }) =>
+      ({startTopPosition, startBottomPosition, index, starting}) =>
         starting &&
         (this.scrollDirection
           ? startTopPosition <= this.scrollBottomPosition
           : startBottomPosition >= this.scrollTopPosition) &&
-        this.#status[index].starting
+        this.#status[index].starting,
     );
   }
   get #getDoingOptions() {
     return this.options.filter(
-      ({ startTopPosition, endBottomPosition, index, doing }) =>
+      ({startTopPosition, endBottomPosition, index, doing}) =>
         doing &&
         (this.scrollDirection
           ? startTopPosition <= this.scrollTopPosition
           : endBottomPosition >= this.scrollBottomPosition) &&
-        this.#status[index].doing
+        this.#status[index].doing,
     );
   }
   get #getEndingOptions() {
     return this.options.filter(
-      ({ ending, index, endTopPosition, endBottomPosition }) =>
+      ({ending, index, endTopPosition, endBottomPosition}) =>
         ending &&
         (this.scrollDirection
           ? endTopPosition <= this.scrollBottomPosition
           : endBottomPosition >= this.scrollTopPosition) &&
-        this.#status[index].ending
+        this.#status[index].ending,
     );
   }
   get #throttleTimer() {
@@ -141,14 +141,14 @@ export default class Scroll<T> {
   }
   #getMargin(margin: string) {
     if (!margin) return 0;
-    if (margin.includes("px")) return Number(margin.replace("px", ""));
-    if (margin.includes("%"))
-      return (Number(margin.replace("%", "")) * this.windowSize) / 100;
+    if (margin.includes('px')) return Number(margin.replace('px', ''));
+    if (margin.includes('%'))
+      return (Number(margin.replace('%', '')) * this.windowSize) / 100;
     return Number(margin) * this.windowSize;
   }
   #getElements() {
     return Array.prototype.slice.call(
-      document.querySelectorAll(this.#props.selector)
+      document.querySelectorAll(this.#props.selector),
     );
   }
   #getStatus() {
@@ -172,7 +172,7 @@ export default class Scroll<T> {
           document.body.offsetHeight,
           document.documentElement.offsetHeight,
           document.body.clientHeight,
-          document.documentElement.clientHeight
+          document.documentElement.clientHeight,
         )
       : Math.max(
           document.body.scrollWidth,
@@ -180,20 +180,20 @@ export default class Scroll<T> {
           document.body.offsetWidth,
           document.documentElement.offsetWidth,
           document.body.clientWidth,
-          document.documentElement.clientWidth
+          document.documentElement.clientWidth,
         );
   }
 
   #checkOptions() {
-    this.#getStartingOptions.map(({ index }) => {
+    this.#getStartingOptions.map(({index}) => {
       const res = this.onStarting(index);
       if (res) this.#status[index].starting = false;
     });
-    this.#getDoingOptions.map(({ index }) => {
+    this.#getDoingOptions.map(({index}) => {
       const res = this.onDoing(index);
       if (res) this.#status[index].doing = false;
     });
-    this.#getEndingOptions.map(({ index }) => {
+    this.#getEndingOptions.map(({index}) => {
       const res = this.onEnding(index);
       if (res) this.#status[index].ending = false;
     });

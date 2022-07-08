@@ -47,7 +47,7 @@
         }
       }
       @for $i from -1 through 10 {
-        [data-value="#{$i + 1}"] & {
+        [data-value='#{$i + 1}'] & {
           @for $j from -1 through 10 {
             &--#{$j + 1} {
               $o: ($j - $i) * $deg;

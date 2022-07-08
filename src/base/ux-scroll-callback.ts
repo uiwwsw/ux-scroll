@@ -1,10 +1,5 @@
-import Scroll, {
-  IndexOption,
-  InputOption,
-  OutputOption,
-  Props,
-} from "./scroll";
-import easingsFunctions, { TEasingName } from "../utils/easing";
+import Scroll, {IndexOption, InputOption, OutputOption, Props} from './scroll';
+import easingsFunctions, {TEasingName} from '../utils/easing';
 export interface InputOptionForCallback extends InputOption {
   startingFrame?: number;
   doingFrame?: number;
@@ -39,9 +34,9 @@ export default class UxScrollCallback extends Scroll<InputOptionForCallback> {
     super({
       ...props,
       commonOptions: {
-        starting: "starting",
-        doing: "doing",
-        ending: "ending",
+        starting: 'starting',
+        doing: 'doing',
+        ending: 'ending',
         startingFrame: 999,
         doingFrame: 999,
         endingFrame: 999,
